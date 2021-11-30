@@ -1,0 +1,21 @@
+{
+ "appBar1": "Explore",
+ "appBar2": "Messages",
+ "appBar3": "Settings",
+ "welcome": "Good evening,",
+ "infoBar": "Today's learner is ",
+ "services": "Our Services",
+ "availableSubjects": "Your available subjects for studying:",
+ "info": "Me",
+ "service1": "Tutors",
+ "service2": "Courses",
+ "subject1": "Physics",
+ "subject2": "Chemistry",
+ "noMessages1": "No Current messages",
+ "noMessages2": "Find all your ongoing chats here",
+ "settingsInfo1": "View full profile",
+ "settingsInfo2": "Notifications",
+ "settingsInfo3": "Help",
+ "settingsInfo4": "Logout",
+ "settingsInfo5": "Language"
+}
