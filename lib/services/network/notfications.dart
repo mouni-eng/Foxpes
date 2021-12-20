@@ -2,6 +2,8 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
+import 'package:movies_app/models/teacher_model.dart';
+
 class NotificationCenter {
 
   static const _fcmUrl = "https://fcm.googleapis.com/fcm/send";
@@ -14,7 +16,7 @@ class NotificationCenter {
 
 
   Future<String> sendMessageNotification({
-  required String token, title, body,
+  required String token, title, body, name, image, uid,
 }) async{
     var messageBody = jsonEncode({
       "to": token,
@@ -26,6 +28,10 @@ class NotificationCenter {
       },
 
       "data": {
+        "type" : "chat",
+        "name" : name,
+        "image" : image,
+        "uid" : uid,
         "url": body,
         "dl": "<deeplink action on tap of notification>"
       }

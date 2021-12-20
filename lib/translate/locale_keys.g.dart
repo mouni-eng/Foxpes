@@ -21,6 +21,7 @@ abstract class  LocaleKeys {
   static const Name = 'Name';
   static const phoneNumber = 'phoneNumber';
   static const chooseField = 'chooseField';
+  static const chooseGender = 'chooseGender';
   static const applyHead = 'applyHead';
   static const apply = 'apply';
   static const registerSubHead = 'registerSubHead';

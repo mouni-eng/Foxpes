@@ -138,7 +138,7 @@ class _SettingsViewState extends State<SettingsView> {
                           InkWell(
                             onTap: () async{
                               await Utils.openEmail(
-                                toEmail: 'othman_almufarrij@hotmail.com',
+                                toEmail: 'foxpes.kwt@outlook.com',
                                 subject: 'Get Help',
                                 body: '',
                               );

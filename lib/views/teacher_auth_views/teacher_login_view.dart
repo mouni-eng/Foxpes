@@ -163,7 +163,7 @@ class TeacherLoginView extends StatelessWidget {
                             decoratedTextButton(text: LocaleKeys.getHelp.tr(), onPressed: () async{
                               // to do implement get help screen
                               await Utils.openEmail(
-                                toEmail: 'othman_almufarrij@hotmail.com',
+                                toEmail: 'foxpes.kwt@outlook.com',
                                 subject: 'Get Help',
                                 body: '',
                               );

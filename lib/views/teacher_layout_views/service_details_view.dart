@@ -9,6 +9,7 @@ import 'package:movies_app/services/helper/icon_broken.dart';
 import 'package:movies_app/view_models/Services_cubit/cubit.dart';
 import 'package:movies_app/view_models/Services_cubit/states.dart';
 import 'package:movies_app/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class TeacherServiceDetailsView extends StatelessWidget {
   final ServicesModel servicesModel;
@@ -26,7 +27,7 @@ class TeacherServiceDetailsView extends StatelessWidget {
               Image.network(
                 servicesModel.image!,
                 width: double.infinity,
-                height: 240,
+                height: 37.h,
                 fit: BoxFit.fill,
               ),
               Container(
@@ -41,9 +42,9 @@ class TeacherServiceDetailsView extends StatelessWidget {
                   )),
             ]),
             Container(
-              margin: const EdgeInsets.only(top: 225.0),
+              margin: EdgeInsets.only(top: 34.h),
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(2.h),
               height: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -85,61 +86,67 @@ class TeacherServiceDetailsView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.0,),
+                    SizedBox(height: 2.h,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('About Me',
                             style: Theme.of(context).textTheme.bodyText1),
-                        SizedBox(height: 10.0,),
+                        SizedBox(height: 1.h,),
                         Text(servicesModel.aboutMe!,
                             style: Theme.of(context).textTheme.bodyText2),
-                        SizedBox(height: 10.0,),
+                        SizedBox(height: 1.h,),
                         Row(
                           children: [
                             Text("${servicesModel.age!} years old",
                                 style: Theme.of(context).textTheme.bodyText2),
-                            SizedBox(width: 20.0,),
+                            SizedBox(width: 5.w,),
                             Text(servicesModel.nationality!,
                                 style: Theme.of(context).textTheme.bodyText2),
+                            SizedBox(width: 2.w,),
+                            Image.asset(
+                              servicesModel.flag!,
+                              package: 'country_code_picker',
+                              width: 8.w,
+                            ),
                           ],
                         ),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Divider(thickness: 0.8,),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Text('Education',
                             style: Theme.of(context).textTheme.bodyText1),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(IconBroken.Bookmark),
-                            SizedBox(width: 10.0,),
+                            SizedBox(width: 2.5.w,),
                             Expanded(
                               child: Text(servicesModel.education!,
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     color: Colors.black,
-                                    fontSize: 16.0,
+                                    fontSize: 12.sp,
                                   )),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Divider(thickness: 0.8,),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Text('Experience',
                             style: Theme.of(context).textTheme.bodyText1),
-                        SizedBox(height: 15.0,),
+                        SizedBox(height: 1.5.h,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(IconBroken.Paper),
-                            SizedBox(width: 10.0,),
+                            SizedBox(width: 2.5.w,),
                             Expanded(
                               child: Text(servicesModel.experience!,
                                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                     color: Colors.black,
-                                    fontSize: 16.0,
+                                    fontSize: 12.sp,
                                   )),
                             ),
                           ],

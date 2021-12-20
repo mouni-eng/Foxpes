@@ -49,3 +49,5 @@ class GetMessagesLoadingState extends ServicesStates {}
 class GetMessagesSuccessState extends ServicesStates {}
 
 class ChangeNotificationState extends ServicesStates {}
+
+class ChooseCountryState extends ServicesStates {}

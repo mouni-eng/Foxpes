@@ -157,7 +157,7 @@ class LoginView extends StatelessWidget {
                             }, context: context),
                             decoratedTextButton(text: LocaleKeys.getHelp.tr(), onPressed: () async{
                               await Utils.openEmail(
-                                toEmail: 'othman_almufarrij@hotmail.com',
+                                toEmail: 'foxpes.kwt@outlook.com',
                                 subject: 'Get Help',
                                 body: '',
                               );

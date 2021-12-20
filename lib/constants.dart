@@ -150,6 +150,8 @@ List<String> fields = [
   "Social Studies",
 ];
 
+List<String> genders = ["Male", "Female"];
+
 List<SubjectsModel> subjectsList = [
   SubjectsModel(
       title: "Arabic",
@@ -216,10 +218,9 @@ List<SubjectsModel> subjectsList = [
 Widget dialog(context, ServicesModel model, dynamic id) => RatingDialog(
   enableComment: false,
   // your app's name?
-  title: model.name!,
+  title: Text(model.name!),
   // encourage your user to leave a high rating?
-  message:
-  'Feel free to give this service a rate upon your experience',
+  message: Text('Feel free to give this service a rate upon your experience'),
   // your app's logo?
   image: Container(
     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -227,9 +228,8 @@ Widget dialog(context, ServicesModel model, dynamic id) => RatingDialog(
       shape: BoxShape.circle,
     ),
       child: Image.network(model.image!, width: 100, height: 100,)),
-  submitButton: 'Submit',
   onCancelled: () => print('cancelled'),
   onSubmitted: (response) {
-    FindTeachersCubit.get(context).updateRating(id, response.rating);
-  },
+    FindTeachersCubit.get(context).updateRating(id, response.rating.toInt());
+  }, submitButtonText: 'Submit',
 );

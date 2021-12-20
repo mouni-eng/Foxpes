@@ -15,7 +15,6 @@ import 'package:movies_app/views/teacher_layout_views/teacher_layout_view.dart';
 import 'package:movies_app/views/teacher_layout_views/teacher_messages_view.dart';
 import 'package:movies_app/views/teacher_layout_views/teacher_services_view.dart';
 import 'package:movies_app/views/teacher_layout_views/teacher_settings_view.dart';
-import 'package:movies_app/widgets.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppStates());
@@ -80,35 +79,10 @@ class AppCubit extends Cubit<AppStates> {
     emit(TeacherAppBottomNavBarState());
   }
 
-  // section handling notfications
 
-  Future<void> notificationHandler() async{
-
-    FirebaseMessaging.instance.requestPermission();
-
-    var token = await FirebaseMessaging.instance.getToken();
-    tokenMessages = token;
-    print(tokenMessages);
-
-
-    // foreground fcm
-    FirebaseMessaging.onMessage.listen((event)
-    {
-      print('on message');
-      print(event.data["url"]);
-      if(teacherCurrentIndex != 2) {
-        showToast(text: event.data["url"].toString(), state: ToastState.SUCCESS,);
-      }else if(currentIndex != 1) {
-        showToast(text: event.data["url"].toString(), state: ToastState.SUCCESS,);
-      }
-    });
-
-    // when click on notification to open app
-    FirebaseMessaging.onMessageOpenedApp.listen((event)
-    {
-      print(event.data.toString());
-
-      showToast(text: event.data["url"].toString(), state: ToastState.SUCCESS,);
-    });
+  void getToken() async {
+      var token = await FirebaseMessaging.instance.getToken();
+      tokenMessages = token;
     }
+
   }

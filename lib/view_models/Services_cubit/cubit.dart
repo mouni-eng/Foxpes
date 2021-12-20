@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +15,7 @@ import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/services/network/notfications.dart';
 import 'package:movies_app/view_models/Services_cubit/states.dart';
+import 'package:movies_app/views/teacher_layout_views/teacher_details_chat_view.dart';
 import 'package:movies_app/widgets.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -39,6 +41,15 @@ class ServicesCubit extends Cubit<ServicesStates> {
   }
 
   // method for uploading new services
+
+  String? nationality = "الكويت";
+  String? flagUri = "flags/kw.png";
+
+  void chooseCountry(String flag, country) {
+    nationality = country;
+    flagUri = flag;
+    emit(ChooseCountryState());
+  }
 
   void uploadService(ServicesModel model) {
     emit(AddServiceLoadingState());
@@ -227,7 +238,11 @@ class ServicesCubit extends Cubit<ServicesStates> {
     }).catchError((error) {
       emit(SendMessageErrorState());
     });
-    NotificationCenter().sendMessageNotification(token: user.token!.toString(), title: user.name, body: "you have recieved a message from ${teacherModel!.name}");
+    NotificationCenter().sendMessageNotification(token: user.token!.toString(), title: user.name, name: teacherModel!.name, image: teacherModel!.image, uid: teacherModel!.uid, body: "you have recieved a message from ${teacherModel!.name}");
+    itemController.jumpTo(
+      index: messages.length,
+      alignment: 0.0,
+    );
   }
 
   List<MessageModel> messages = [];
@@ -281,6 +296,43 @@ class ServicesCubit extends Cubit<ServicesStates> {
           );
         }
       });
+    });
+  }
+
+  // section handling notfications
+
+  List<RemoteMessage> teacherMessages = [];
+
+  Future<void> teacherNotificationHandler(context) async{
+
+    FirebaseMessaging.instance.requestPermission();
+
+    FirebaseMessaging.instance.onTokenRefresh.listen((event) {
+      FirebaseFirestore.instance.collection("teachers").doc(teacherModel!.uid).update({
+        "token" : event
+      });
+    });
+
+
+    // foreground fcm
+    FirebaseMessaging.onMessage.listen((event)
+    {
+      if(event.data["type"] == "chat") {
+        teacherMessages.add(event);
+      }
+      print(event.data);
+    });
+
+    // when click on notification to open app
+    FirebaseMessaging.onMessageOpenedApp.listen((event)
+    {
+      if(event.data["type"] == "chat") {
+        navigateTo(context, TeacherDetailsChatView(userModel: LogInModel(
+          name: event.data["name"],
+          image: event.data["image"],
+          uid: event.data["uid"],
+        )));
+      }
     });
   }
 

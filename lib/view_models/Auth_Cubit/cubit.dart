@@ -22,6 +22,7 @@ class AuthCubit extends Cubit<AuthStates> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+
   void changePasswordVisibility() {
     isPassword = !isPassword;
     suffix =
@@ -43,7 +44,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
   // method for handling sign up for users
 
-  void signUp({required String email, password, phone, name}) {
+  void signUp({required String email, password, phone, name, gender}) {
     emit(SignUpLoadingState());
     _auth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
       LogInModel logInModel = LogInModel(
@@ -51,8 +52,9 @@ class AuthCubit extends Cubit<AuthStates> {
         name: name,
         uid: value.user!.uid,
         phone: phone,
-        image: "https://image.freepik.com/free-photo/bearded-young-self-confident-male-with-pleasant-appearance-dressed-blue-shirt-looks-directly-isolated-white-wall-handsome-man-freelancer-thinks-about-work-indoor_273609-16089.jpg",
+        image: gender == "Male" ? "https://image.freepik.com/free-photo/bearded-young-self-confident-male-with-pleasant-appearance-dressed-blue-shirt-looks-directly-isolated-white-wall-handsome-man-freelancer-thinks-about-work-indoor_273609-16089.jpg" : "https://image.freepik.com/free-photo/happy-arab-woman-hijab-portrait-smiling-girl-posing-red-studio-background-young-emotional-woman-human-emotions-facial-expression-concept-front-view_155003-22795.jpg",
         token: tokenMessages,
+        gender: gender,
       );
       createUser(logInModel: logInModel);
       emit(SignUpSuccessState());
@@ -83,16 +85,17 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
   TeacherModel? teacherModel;
-  void teacherSignUp({required String email, password, phone, name, field}) {
+  void teacherSignUp({required String email, password, phone, name, field, gender}) {
     emit(TeacherSignUpLoadingState());
     _auth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
       teacherModel = TeacherModel(
         email: email,
         name: name,
         uid: value.user!.uid,
-        image: "https://image.freepik.com/free-photo/bearded-young-self-confident-male-with-pleasant-appearance-dressed-blue-shirt-looks-directly-isolated-white-wall-handsome-man-freelancer-thinks-about-work-indoor_273609-16089.jpg",
+        image: gender == "Male" ? "https://image.freepik.com/free-photo/bearded-young-self-confident-male-with-pleasant-appearance-dressed-blue-shirt-looks-directly-isolated-white-wall-handsome-man-freelancer-thinks-about-work-indoor_273609-16089.jpg" : "https://image.freepik.com/free-photo/happy-arab-woman-hijab-portrait-smiling-girl-posing-red-studio-background-young-emotional-woman-human-emotions-facial-expression-concept-front-view_155003-22795.jpg",
         phone: phone,
         field: field,
+        gender: gender,
         status: "Pending",
         token: tokenMessages,
       );

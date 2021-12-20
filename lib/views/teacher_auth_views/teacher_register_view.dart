@@ -24,6 +24,7 @@ class _TeacherRegisterViewState extends State<TeacherRegisterView> {
 
   var _formKey = GlobalKey<FormState>();
   Object? field;
+  Object? gender;
   TextEditingController _emailEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
   TextEditingController _nameEditingController = TextEditingController();
@@ -168,20 +169,38 @@ class _TeacherRegisterViewState extends State<TeacherRegisterView> {
                     SizedBox(
                       height: 3.h,
                     ),
-                    Container(
-                      width: double.infinity,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(items: fields.map(buildMenuItem).toList(),
-                          value: field,
-                          hint: Text(LocaleKeys.chooseField.tr(), style: Theme.of(context).textTheme.bodyText2,),
-                          onChanged: (value) => setState(() => field = value),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(items: fields.map(buildMenuItem).toList(),
+                              value: field,
+                              hint: Text(LocaleKeys.chooseField.tr(), style: Theme.of(context).textTheme.bodyText2,),
+                              onChanged: (value) => setState(() => field = value),
+                            ),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kPrimaryColor),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 4.w),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: kPrimaryColor),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+                        Container(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(items: genders.map(buildMenuItem).toList(),
+                              value: gender,
+                              hint: Text(LocaleKeys.chooseGender.tr(), style: Theme.of(context).textTheme.bodyText2,),
+                              onChanged: (value) => setState(() => gender = value),
+                            ),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kPrimaryColor),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 3.h,
@@ -190,16 +209,17 @@ class _TeacherRegisterViewState extends State<TeacherRegisterView> {
                       condition: state is! TeacherSignUpLoadingState && state is! TeacherUploadLoadingState && state is! CreateTeacherLoadingState,
                       builder: (context) => defaultButton(function: (){
                         if (_formKey.currentState!.validate()) {
-                          if(field != null) {
+                          if(field != null && gender != null) {
                             cubit.teacherSignUp(
                               name: _nameEditingController.text,
                               phone: _phoneEditingController.text,
                               email: _emailEditingController.text,
                               field: field,
+                              gender: gender,
                               password: _passwordEditingController.text,
                             );
                           }else {
-                            showToast(text: "Please choose field", state: ToastState.ERROR);
+                            showToast(text: "Please complete the form", state: ToastState.ERROR);
                           }
                         }
                       }, text: LocaleKeys.apply.tr(), radius: 25.0,),

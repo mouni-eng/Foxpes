@@ -1,6 +1,6 @@
 class ServicesModel {
 
-  String? nationality, aboutMe, education, experience, name, uid, image, age, hourRate, field, rating, dateTime;
+  String? nationality, aboutMe, education, experience, name, uid, image, age, hourRate, field, rating, dateTime, flag;
   int? rank;
 
   ServicesModel({
@@ -17,6 +17,7 @@ class ServicesModel {
     this.field,
     this.rating,
     this.dateTime,
+    this.flag,
   });
 
   ServicesModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +34,7 @@ class ServicesModel {
     field = json['field'];
     rating = json['rating'];
     dateTime = json['dateTime'];
+    flag = json['flag'];
   }
 
   Map<String, dynamic> toMap() {
@@ -50,6 +52,7 @@ class ServicesModel {
       'field' : field,
       'rating' : rating,
       'dateTime' : dateTime,
+      'flag' : flag,
     };
   }
 

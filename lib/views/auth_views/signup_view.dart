@@ -2,6 +2,7 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/constants.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/translate/locale_keys.g.dart';
 import 'package:movies_app/view_models/App_Cubit/cubit.dart';
@@ -12,13 +13,23 @@ import 'package:movies_app/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:sizer/sizer.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {var _formKey = GlobalKey<FormState>();
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+
+  var _formKey = GlobalKey<FormState>();
+  Object? gender;
   TextEditingController _emailEditingController = TextEditingController();
   TextEditingController _passwordEditingController = TextEditingController();
   TextEditingController _nameEditingController = TextEditingController();
   TextEditingController _phoneEditingController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+
   return Scaffold(
     appBar: AppBar(),
     body: BlocConsumer<AuthCubit, AuthStates>(
@@ -132,6 +143,24 @@ class RegisterView extends StatelessWidget {
                     prefix: Icons.phone_android_outlined,
                   ),
                   SizedBox(
+                    height: 4.h,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(items: genders.map(buildMenuItem).toList(),
+                        value: gender,
+                        hint: Text(LocaleKeys.chooseGender.tr(), style: Theme.of(context).textTheme.bodyText2,),
+                        onChanged: (value) => setState(() => gender = value),
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  SizedBox(
                     height: 5.h,
                   ),
                   ConditionalBuilder(
@@ -140,12 +169,17 @@ class RegisterView extends StatelessWidget {
                       radius: 25,
                         function: () {
                           if (_formKey.currentState!.validate()) {
-                            cubit.signUp(
-                              email: _emailEditingController.text,
-                              password: _passwordEditingController.text,
-                              name: _nameEditingController.text,
-                              phone: _phoneEditingController.text,
-                            );
+                            if(gender != null) {
+                              cubit.signUp(
+                                email: _emailEditingController.text,
+                                password: _passwordEditingController.text,
+                                name: _nameEditingController.text,
+                                phone: _phoneEditingController.text,
+                                gender: gender,
+                              );
+                            }else {
+                              showToast(text: "Please complete the form", state: ToastState.ERROR);
+                            }
                           }
                         },
                         text: LocaleKeys.register.tr()),

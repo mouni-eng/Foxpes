@@ -39,7 +39,7 @@ class EducationApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (BuildContext context) => AuthCubit()),
-          BlocProvider(create: (BuildContext context) => AppCubit()..getCacheData()..notificationHandler()),
+          BlocProvider(create: (BuildContext context) => AppCubit()..getCacheData()..getToken()),
           BlocProvider(create: (BuildContext context) => ExploreCubit()..getUserData()..getUserChats()),
           BlocProvider(create: (BuildContext context) => ServicesCubit()..getTeacherData()..getService()..getChats()),
           BlocProvider(create: (BuildContext context) => FindTeachersCubit()),

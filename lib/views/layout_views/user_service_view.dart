@@ -11,6 +11,7 @@ import 'package:movies_app/view_models/find_teacher_cubit/cubit.dart';
 import 'package:movies_app/view_models/find_teacher_cubit/states.dart';
 import 'package:movies_app/views/layout_views/details_chat_view.dart';
 import 'package:movies_app/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class ServiceDetailsView extends StatelessWidget {
   final ServicesModel servicesModel;
@@ -33,7 +34,7 @@ class ServiceDetailsView extends StatelessWidget {
                     Image.network(
                       servicesModel.image!,
                       width: double.infinity,
-                      height: 240,
+                      height: 37.h,
                       fit: BoxFit.fill,
                     ),
                     Container(
@@ -48,7 +49,7 @@ class ServiceDetailsView extends StatelessWidget {
                         )),
                   ]),
                   Container(
-                    margin: const EdgeInsets.only(top: 225.0),
+                    margin: EdgeInsets.only(top: 34.h),
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     padding: const EdgeInsets.all(20.0),
                     height: double.infinity,
@@ -92,61 +93,67 @@ class ServiceDetailsView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20.0,),
+                          SizedBox(height: 2.h,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('About Me',
                                   style: Theme.of(context).textTheme.bodyText1),
-                              SizedBox(height: 10.0,),
+                              SizedBox(height: 1.h,),
                               Text(servicesModel.aboutMe!,
                                   style: Theme.of(context).textTheme.bodyText2),
-                              SizedBox(height: 10.0,),
+                              SizedBox(height: 1.h,),
                               Row(
                                 children: [
                                   Text("${servicesModel.age!} years old",
                                       style: Theme.of(context).textTheme.bodyText2),
-                                  SizedBox(width: 20.0,),
+                                  SizedBox(width: 5.w,),
                                   Text(servicesModel.nationality!,
                                       style: Theme.of(context).textTheme.bodyText2),
+                                  SizedBox(width: 2.w,),
+                                  Image.asset(
+                                    servicesModel.flag!,
+                                    package: 'country_code_picker',
+                                    width: 8.w,
+                                  ),
                                 ],
                               ),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Divider(thickness: 0.8,),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Text('Education',
                                   style: Theme.of(context).textTheme.bodyText1),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(IconBroken.Bookmark),
-                                  SizedBox(width: 10.0,),
+                                  SizedBox(width: 2.5.w,),
                                   Expanded(
                                     child: Text(servicesModel.education!,
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                           color: Colors.black,
-                                          fontSize: 16.0,
+                                          fontSize: 12.sp,
                                         )),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Divider(thickness: 0.8,),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Text('Experience',
                                   style: Theme.of(context).textTheme.bodyText1),
-                              SizedBox(height: 15.0,),
+                              SizedBox(height: 1.5.h,),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(IconBroken.Paper),
-                                  SizedBox(width: 10.0,),
+                                  SizedBox(width: 2.5.w,),
                                   Expanded(
                                     child: Text(servicesModel.experience!,
                                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                                           color: Colors.black,
-                                          fontSize: 16.0,
+                                          fontSize: 12.sp,
                                         )),
                                   ),
                                 ],
@@ -178,10 +185,10 @@ class ServiceDetailsView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text("Let ${servicesModel.name!.split(" ").first} Know what you need help with",),
-                        SizedBox(height: 10.0,),
+                        SizedBox(height: 1.h,),
                         defaultButton(function: (){
                           navigateTo(context, DetailsChatView(teacherModel: TeacherModel(name: servicesModel.name, uid: servicesModel.uid, image: servicesModel.image)));
-                        }, text: "Send Message", height: 40.0, isUpperCase: false),
+                        }, text: "Send Message", height: 6.h, isUpperCase: false),
                       ],
                     ),
                   ),

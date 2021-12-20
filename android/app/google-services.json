@@ -7,9 +7,61 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:309628111242:android:8befe7e1ba75be07d76073",
+        "mobilesdk_app_id": "1:309628111242:android:91bf37161ce7eb34d76073",
         "android_client_info": {
-          "package_name": "com.example.movies_app"
+          "package_name": "com.foxpes.Foxpes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309628111242-k4p1t7cfhm1lki7cujofj8ato9df3tjd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foxpes.Foxpes",
+            "certificate_hash": "dfd3a5494d1d09025a12c37ebb26dcb571ef340f"
+          }
+        },
+        {
+          "client_id": "309628111242-uem9k2q3f16cu4eiauqjrh7e73af99e2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foxpes.Foxpes",
+            "certificate_hash": "5a75120c4784a733d9bc912e95ee15fb4cafab2d"
+          }
+        },
+        {
+          "client_id": "309628111242-5f2g2o4979c2kpmpmufami4ej5qjauv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn25ZNXg3Zw17EXWPnA00dSYEsJsIG7jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309628111242-5f2g2o4979c2kpmpmufami4ej5qjauv5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "309628111242-2gi1mlac1h97cdajq36i4bbahd75oibk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foxpes.Foxpes"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309628111242:android:7ddf741ec15a48d2d76073",
+        "android_client_info": {
+          "package_name": "com.foxpes.admin"
         }
       },
       "oauth_client": [
@@ -29,6 +81,13 @@
             {
               "client_id": "309628111242-5f2g2o4979c2kpmpmufami4ej5qjauv5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "309628111242-2gi1mlac1h97cdajq36i4bbahd75oibk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foxpes.Foxpes"
+              }
             }
           ]
         }

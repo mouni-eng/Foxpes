@@ -1,5 +1,5 @@
 class LogInModel {
-  String? email, phone, name, uid, image, token;
+  String? email, phone, name, uid, image, token, gender;
 
   LogInModel({
     this.phone,
@@ -8,6 +8,7 @@ class LogInModel {
     this.uid,
     this.image,
     this.token,
+    this.gender,
   });
 
   LogInModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +18,7 @@ class LogInModel {
     uid = json['uid'];
     image = json['image'];
     token = json['token'];
+    gender = json['gender'];
   }
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class LogInModel {
       'uid' : uid,
       'image' : image,
       'token' : token,
+      'gender' : gender,
     };
   }
 }

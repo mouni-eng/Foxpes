@@ -1,5 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
@@ -8,6 +9,7 @@ import 'package:movies_app/services/helper/icon_broken.dart';
 import 'package:movies_app/view_models/Services_cubit/cubit.dart';
 import 'package:movies_app/view_models/Services_cubit/states.dart';
 import 'package:movies_app/widgets.dart';
+import 'package:sizer/sizer.dart';
 
 class AddServicesView extends StatelessWidget {
 
@@ -17,7 +19,6 @@ class AddServicesView extends StatelessWidget {
     TextEditingController _hourRateEditingController = TextEditingController();
     TextEditingController _aboutMeEditingController = TextEditingController();
     TextEditingController _ageEditingController = TextEditingController();
-    TextEditingController _nationalityEditingController = TextEditingController();
     TextEditingController _educationEditingController = TextEditingController();
     TextEditingController _experienceEditingController = TextEditingController();
 
@@ -58,7 +59,7 @@ class AddServicesView extends StatelessWidget {
                             label: "Age",
                             prefix: IconBroken.Calendar),
                       ),
-                      SizedBox(width: 10.0,),
+                      SizedBox(width: 2.5.w,),
                       Expanded(
                         child: defaultFormField(
                             context: context,
@@ -75,21 +76,31 @@ class AddServicesView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15.0,),
-                  defaultFormField(
-                      context: context,
-                      controller: _nationalityEditingController,
-                      type: TextInputType.text,
-                      validate: (value) {
-                        if (value!.isEmpty) {
-                          return "Please Enter Your Nationality";
-                        }
-                        return null;
+                  SizedBox(height: 2.h,),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: kPrimaryColor),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: CountryCodePicker(
+                      onChanged: (value) {
+                        cubit.chooseCountry(value.flagUri!, value.name);
                       },
-                      label: "Nationality",
-                      prefix: IconBroken.Home),
+                      // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                      initialSelection: '+965',
+                      favorite: ['+965','+20'],
+                      // optional. Shows only country name and flag
+                      showCountryOnly: true,
+                      // optional. Shows only country name and flag when popup is closed.
+                      showOnlyCountryWhenClosed: true,
+                      // optional. aligns the flag and the Text left
+                      alignLeft: true,
+                    ),
+                  ),
                   SizedBox(
-                    height: 15.0,
+                    height: 2.h,
                   ),
                   defaultFormField(
                     maxLines: 2,
@@ -106,7 +117,7 @@ class AddServicesView extends StatelessWidget {
                     prefix: IconBroken.Info_Circle,
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 2.h,
                   ),
                   defaultFormField(
                     maxLines: 2,
@@ -122,7 +133,7 @@ class AddServicesView extends StatelessWidget {
                     label: "Education",
                     prefix: IconBroken.Bag_2,),
                   SizedBox(
-                    height: 15.0,
+                    height: 2.h,
                   ),
                   defaultFormField(
                     maxLines: 2,
@@ -139,18 +150,15 @@ class AddServicesView extends StatelessWidget {
                     prefix: IconBroken.Paper_Plus,
                   ),
                   SizedBox(
-                    height: 30.0,
+                    height: 6.h,
                   ),
                   ConditionalBuilder(
                     condition: state is! AddServiceLoadingState,
                     builder: (context) => defaultButton(function: (){
                       if (_formKey.currentState!.validate()) {
-                        if(cubit.teacherModel!.status == "Pending") {
-                          showToast(text: "Your Profile is still Pending for approval", state: ToastState.ERROR);
-                        }else {
                           cubit.uploadService(
                               ServicesModel(
-                                nationality: _nationalityEditingController.text,
+                                nationality: cubit.nationality,
                                 aboutMe: _aboutMeEditingController.text,
                                 name: cubit.teacherModel!.name ?? "",
                                 uid: uId ?? "",
@@ -162,9 +170,14 @@ class AddServicesView extends StatelessWidget {
                                 rank: 0,
                                 rating: "NA",
                                 field: cubit.teacherModel!.field ?? "",
+                                flag: cubit.flagUri,
                               )
                           );
-                        }
+                          _hourRateEditingController.clear();
+                          _aboutMeEditingController.clear();
+                          _ageEditingController.clear();
+                          _educationEditingController.clear();
+                          _experienceEditingController.clear();
                       }
                     }, text: "Submit", radius: 25.0, isUpperCase: false),
                     fallback: (context) => Center(child: CircularProgressIndicator(),),

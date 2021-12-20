@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +14,7 @@ import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/services/network/notfications.dart';
 import 'package:movies_app/view_models/explore_cubit/states.dart';
+import 'package:movies_app/views/layout_views/details_chat_view.dart';
 import 'package:movies_app/widgets.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -185,7 +187,7 @@ class ExploreCubit extends Cubit<ExploreStates> {
         .doc(receiverId)
         .get().then((value) {
           teacherModel = TeacherModel.fromJson(value.data()!);
-          NotificationCenter().sendMessageNotification(token: teacherModel!.token!.toString(), title: teacherModel!.name, body: "you have a new message from ${userModel!.name}");
+          NotificationCenter().sendMessageNotification(token: teacherModel!.token!.toString(), title: teacherModel!.name, name: userModel!.name, image: userModel!.image, uid: userModel!.uid, body: "you have a new message from ${userModel!.name}");
     });
     itemController.jumpTo(
       index: userMessages.length,
@@ -263,4 +265,39 @@ class ExploreCubit extends Cubit<ExploreStates> {
     });
   }
 
+  // section handling notfications
+
+  List<RemoteMessage> messages = [];
+
+  Future<void> notificationHandler(context) async{
+
+    FirebaseMessaging.instance.requestPermission();
+
+    FirebaseMessaging.instance.onTokenRefresh.listen((event) {
+      FirebaseFirestore.instance.collection("users").doc(userModel!.uid).update({
+        "token" : event
+      });
+    });
+
+
+    // foreground fcm
+    FirebaseMessaging.onMessage.listen((event)
+    {
+      if(event.data["type"] == "chat") {
+        messages.add(event);
+      }
+    });
+
+    // when click on notification to open app
+    FirebaseMessaging.onMessageOpenedApp.listen((event)
+    {
+      if(event.data["type"] == "chat") {
+        navigateTo(context, DetailsChatView(teacherModel: TeacherModel(
+          name: event.data["name"],
+          image: event.data["image"],
+          uid: event.data["uid"],
+        )));
+      }
+    });
+  }
 }
