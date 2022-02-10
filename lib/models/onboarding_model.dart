@@ -1,5 +1,5 @@
 class OnBoardingModel {
-  String? title, image;
+  String? title, image, subtitle;
 
-  OnBoardingModel({required this.title, required this.image,});
+  OnBoardingModel({required this.title, required this.image, required this.subtitle});
 }

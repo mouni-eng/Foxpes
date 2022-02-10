@@ -16,7 +16,7 @@ import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/services/network/notfications.dart';
 import 'package:movies_app/view_models/Services_cubit/states.dart';
 import 'package:movies_app/views/teacher_layout_views/teacher_details_chat_view.dart';
-import 'package:movies_app/widgets.dart';
+import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ServicesCubit extends Cubit<ServicesStates> {
@@ -238,7 +238,7 @@ class ServicesCubit extends Cubit<ServicesStates> {
     }).catchError((error) {
       emit(SendMessageErrorState());
     });
-    NotificationCenter().sendMessageNotification(token: user.token!.toString(), title: user.name, name: teacherModel!.name, image: teacherModel!.image, uid: teacherModel!.uid, body: "you have recieved a message from ${teacherModel!.name}");
+    NotificationCenter().sendMessageNotification(token: user.token!.toString(), title: user.firstName, name: teacherModel!.name, image: teacherModel!.image, uid: teacherModel!.uid, body: "you have recieved a message from ${teacherModel!.name}");
     itemController.jumpTo(
       index: messages.length,
       alignment: 0.0,
@@ -292,7 +292,7 @@ class ServicesCubit extends Cubit<ServicesStates> {
           teacherModel = null;
           navigateToAndFinish(
             context,
-            EducationApp(),
+            Foxpes(),
           );
         }
       });
@@ -328,7 +328,7 @@ class ServicesCubit extends Cubit<ServicesStates> {
     {
       if(event.data["type"] == "chat") {
         navigateTo(context, TeacherDetailsChatView(userModel: LogInModel(
-          name: event.data["name"],
+          firstName: event.data["name"],
           image: event.data["image"],
           uid: event.data["uid"],
         )));

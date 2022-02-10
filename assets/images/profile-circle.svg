@@ -1,0 +1,6 @@
+<svg id="profile-circle" xmlns="http://www.w3.org/2000/svg" width="203" height="203" viewBox="0 0 203 203">
+  <path id="Vector" d="M28.758,55.4a8.143,8.143,0,0,0-2.03,0,27.743,27.743,0,1,1,2.03,0Z" transform="translate(73.757 52.696)" fill="#dbdbdb" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  <path id="Vector-2" data-name="Vector" d="M114.018,33.368A84.027,84.027,0,0,1,57.009,55.529,84.027,84.027,0,0,1,0,33.368c.846-7.951,5.921-15.733,14.971-21.823,23.176-15.394,61.069-15.394,84.076,0C108.1,17.636,113.173,25.417,114.018,33.368Z" transform="translate(44.491 130.554)" fill="#dbdbdb" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  <path id="Vector-3" data-name="Vector" d="M169.167,84.583A84.583,84.583,0,1,1,84.583,0,84.583,84.583,0,0,1,169.167,84.583Z" transform="translate(16.917 16.917)" fill="none" stroke="#dbdbdb" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  <path id="Vector-4" data-name="Vector" d="M0,0H203V203H0Z" transform="translate(203 203) rotate(180)" fill="none" opacity="0"/>
+</svg>

@@ -15,7 +15,7 @@ import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/services/network/notfications.dart';
 import 'package:movies_app/view_models/explore_cubit/states.dart';
 import 'package:movies_app/views/layout_views/details_chat_view.dart';
-import 'package:movies_app/widgets.dart';
+import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ExploreCubit extends Cubit<ExploreStates> {
@@ -97,7 +97,7 @@ class ExploreCubit extends Cubit<ExploreStates> {
     String? image,
   }) {
     LogInModel model = LogInModel(
-      name: name,
+      firstName: name,
       phone: phone,
       email: email,
       image: image ?? userModel!.image,
@@ -187,7 +187,7 @@ class ExploreCubit extends Cubit<ExploreStates> {
         .doc(receiverId)
         .get().then((value) {
           teacherModel = TeacherModel.fromJson(value.data()!);
-          NotificationCenter().sendMessageNotification(token: teacherModel!.token!.toString(), title: teacherModel!.name, name: userModel!.name, image: userModel!.image, uid: userModel!.uid, body: "you have a new message from ${userModel!.name}");
+          NotificationCenter().sendMessageNotification(token: teacherModel!.token!.toString(), title: teacherModel!.name, name: userModel!.firstName, image: userModel!.image, uid: userModel!.uid, body: "you have a new message from ${userModel!.firstName}");
     });
     itemController.jumpTo(
       index: userMessages.length,
@@ -258,7 +258,7 @@ class ExploreCubit extends Cubit<ExploreStates> {
           userModel = null;
           navigateToAndFinish(
             context,
-            EducationApp(),
+            Foxpes(),
           );
         }
       });

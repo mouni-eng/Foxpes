@@ -1,29 +1,36 @@
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:movies_app/widgets/custom_text.dart';
+import 'package:movies_app/widgets/custom_toast.dart';
+import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/services/helper/url_launcher.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
+import 'package:movies_app/size_config.dart';
 import 'package:movies_app/translate/locale_keys.g.dart';
 import 'package:movies_app/view_models/App_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
+import 'package:movies_app/views/auth_views/forgot_password_view.dart';
 import 'package:movies_app/views/auth_views/signup_view.dart';
 import 'package:movies_app/views/layout_views/layout_view.dart';
-import 'package:movies_app/views/teacher_auth_views/teacher_login_view.dart';
-import 'package:movies_app/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/widgets/custom_button.dart';
+import 'package:movies_app/widgets/custom_textformfield.dart';
 
 class LoginView extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailEditingController = TextEditingController();
+  final TextEditingController _passwordEditingController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var _formKey = GlobalKey<FormState>();
-    TextEditingController _emailEditingController = TextEditingController();
-    TextEditingController _passwordEditingController = TextEditingController();
+    SizeConfig().init(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -35,7 +42,8 @@ class LoginView extends StatelessWidget {
               key: 'uId',
               value: state.uId,
             ).then((value) {
-              CacheHelper.saveData(key: "categorie", value: "user").then((value) {
+              CacheHelper.saveData(key: "categorie", value: "user")
+                  .then((value) {
                 if (value) {
                   AppCubit.get(context).getCacheData();
                   navigateToAndFinish(
@@ -55,113 +63,173 @@ class LoginView extends StatelessWidget {
           return Stack(
             alignment: Alignment.topCenter,
             children: [
-              Image.asset('assets/images/cover.jpeg', width: double.infinity, height: 35.h, fit: BoxFit.cover,),
-              Container(
-                margin: EdgeInsets.only(top: 34.h),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0),
+              Stack(
+                children: [
+                  ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(0.3), BlendMode.darken),
+                    child: Image.asset(
+                      'assets/images/signin.jpeg',
+                      width: double.infinity,
+                      height: height(406),
+                      fit: BoxFit.cover,
+                      colorBlendMode: BlendMode.dstATop,
+                    ),
                   ),
-                  color: Colors.white,
-                ),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Form(
-                    key: _formKey,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width(16), vertical: height(220)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 3.h,),
-                        defaultFormField(
-                            context: context,
-                            controller: _emailEditingController,
-                            type: TextInputType.emailAddress,
-                            validate: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter Your Email";
-                              }
-                              return null;
-                            },
-                            label: LocaleKeys.email.tr(),
-                            prefix: Icons.email_outlined),
-                        SizedBox(
-                          height: 3.h,
+                        CustomText(
+                          text: "Welcome back",
+                          fontsize: 30.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
-                        defaultFormField(
-                            context: context,
-                            controller: _passwordEditingController,
-                            type: TextInputType.visiblePassword,
-                            validate: (value) {
-                              if (value!.isEmpty) {
-                                return "Password Is Too Short";
-                              }
-                              return null;
-                            },
-                            label: LocaleKeys.password.tr(),
-                            prefix: Icons.lock_outline,
-                            suffix: cubit.suffix,
-                            suffixPressed: () {
+                        CustomText(
+                          text:
+                              "Sign in now with your email and password, enjoy.",
+                          fontsize: 18.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.normal,
+                          height: height(1.4),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(top: height(360)),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                padding: EdgeInsets.symmetric(
+                  horizontal: width(16),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25.0),
+                    topRight: Radius.circular(25.0),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: height(24),
+                        ),
+                        CustomFormField(
+                          context: context,
+                          controller: _emailEditingController,
+                          type: TextInputType.emailAddress,
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return "";
+                            }
+                            return null;
+                          },
+                          label: LocaleKeys.email.tr(),
+                          hintText: "support.kw@gmail.com",
+                        ),
+                        SizedBox(
+                          height: height(16),
+                        ),
+                        CustomFormField(
+                          context: context,
+                          controller: _passwordEditingController,
+                          type: TextInputType.visiblePassword,
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return " ";
+                            }
+                            return null;
+                          },
+                          label: LocaleKeys.password.tr(),
+                          suffix: IconButton(
+                            icon: SvgPicture.asset(cubit.suffix),
+                            onPressed: () {
                               cubit.changePasswordVisibility();
                             },
-                            isPassword: cubit.isPassword),
-                        SizedBox(
-                          height: 4.h,
+                          ),
+                          isPassword: cubit.isPassword,
+                          hintText: "*************",
                         ),
-                        ConditionalBuilder(
-                          condition: state is! LogInLoadingState,
-                          builder: (context) => defaultButton(
-                              radius: 25,
-                              function: () {
-                                if (_formKey.currentState!.validate()) {
-                                  cubit.signIn(
-                                      email: _emailEditingController.text,
-                                      password: _passwordEditingController.text
-                                  );
-                                }
-                              },
-                              text: LocaleKeys.login.tr()),
-                          fallback: (context) => Center(
-                            child: CircularProgressIndicator(),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: TextButton(
+                            onPressed: () {
+                              navigateTo(context, ForgotPasswordView());
+                            },
+                            child: Text(
+                              LocaleKeys.forgetPassword.tr(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: kPrimaryColor,
+                                    fontSize: 13.sp,
+                                    height: 0,
+                                  ),
+                            ),
                           ),
                         ),
                         SizedBox(
-                          height: 2.h,
+                          height: height(10),
+                        ),
+                        ConditionalBuilder(
+                          condition: state is! LogInLoadingState,
+                          builder: (context) => CustomButton(
+                            radius: 6,
+                            function: () {
+                              if (_formKey.currentState!.validate()) {
+                                cubit.signIn(
+                                    email: _emailEditingController.text,
+                                    password: _passwordEditingController.text);
+                              }
+                            },
+                            text: LocaleKeys.login.tr(),
+                            isUpperCase: true,
+                          ),
+                          fallback: (context) => Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height(122),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(LocaleKeys.doNotHave.tr(), style: Theme.of(context).textTheme.bodyText2,),
+                            Text(
+                              LocaleKeys.doNotHave.tr(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2!
+                                  .copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
                             TextButton(
                                 onPressed: () {
                                   navigateTo(context, RegisterView());
                                 },
-                                child: defaultTextField(
-                                    size: 12.sp,
-                                    text: LocaleKeys.register.tr(),
-                                    color: kPrimaryColor)),
-                          ],
-                        ),
-                        Divider(
-                          thickness: 1.0,
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Row(
-                          children: [
-                            decoratedTextButton(text: LocaleKeys.joinAs.tr(), onPressed: () {
-                              navigateTo(context, TeacherLoginView());
-                            }, context: context),
-                            decoratedTextButton(text: LocaleKeys.getHelp.tr(), onPressed: () async{
-                              await Utils.openEmail(
-                                toEmail: 'foxpes.kwt@outlook.com',
-                                subject: 'Get Help',
-                                body: '',
-                              );
-                            }, context: context),
+                                child: Text(
+                                  LocaleKeys.register.tr(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: kPrimaryColor,
+                                      ),
+                                )),
                           ],
                         ),
                       ],

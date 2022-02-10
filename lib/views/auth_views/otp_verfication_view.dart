@@ -1,150 +1,216 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/views/layout_views/layout_view.dart';
-import 'package:movies_app/views/teacher_layout_views/teacher_layout_view.dart';
-import 'package:movies_app/widgets.dart';
-// ignore: import_of_legacy_library_into_null_safe
+import 'package:movies_app/models/user_model.dart';
+import 'package:movies_app/size_config.dart';
+import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
+import 'package:movies_app/view_models/Auth_Cubit/states.dart';
+import 'package:movies_app/views/auth_views/parteners_signup_views/baby_sitter_views/babysitter_signup_view.dart';
+import 'package:movies_app/views/auth_views/parteners_signup_views/drivers_views/driver_signup_view.dart';
+import 'package:movies_app/views/auth_views/parteners_signup_views/teacher_views/teacher_signup_view.dart';
+import 'package:movies_app/views/auth_views/upload_pic_view.dart';
+import 'package:movies_app/widgets/custom_button.dart';
+import 'package:movies_app/widgets/custom_navigation.dart';
+import 'package:movies_app/widgets/custom_text.dart';
+import 'package:movies_app/widgets/custom_toast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
-class OTPView extends StatefulWidget {
-  final String phone;
+class OtpVerficationView extends StatefulWidget {
+  final String phoneNumber;
   final String categorie;
-  OTPView(this.phone, this.categorie);
+
+  OtpVerficationView({required this.phoneNumber, required this.categorie});
+
   @override
-  _OTPViewState createState() => _OTPViewState();
+  State<OtpVerficationView> createState() => _OtpVerficationViewState();
 }
 
-class _OTPViewState extends State<OTPView> {
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  String? _verificationCode;
+class _OtpVerficationViewState extends State<OtpVerficationView> {
   final TextEditingController _pinPutController = TextEditingController();
+  String? verificationCode;
+  String? pin;
   final FocusNode _pinPutFocusNode = FocusNode();
+
   final BoxDecoration pinPutDecoration = BoxDecoration(
-    color: kSecondaryColor,
-    borderRadius: BorderRadius.circular(10.0),
+    color: Colors.white,
     border: Border.all(
-      color: kPrimaryColor,
+      color: kPrimaryColor.withOpacity(0.4),
     ),
+    borderRadius: BorderRadius.circular(6),
   );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldkey,
       appBar: AppBar(
-        title: Text('OTP Verification'),
+        title:
+            Text("Confirm Code", style: Theme.of(context).textTheme.headline1),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 40),
-            child: Center(
-              child: Text(
-                'We sent your code to +965-${widget.phone}',
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  fontSize: 16
+      body: BlocConsumer<AuthCubit, AuthStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          AuthCubit cubit = AuthCubit();
+          return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: width(16)),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: height(64),
+                    ),
+                    Image.asset("assets/images/resend.png"),
+                    SizedBox(
+                      height: height(25),
+                    ),
+                    CustomText(
+                      text: "Enter Verification Code",
+                      fontsize: 18.sp,
+                      textAlign: TextAlign.center,
+                      height: height(1.5),
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: height(16),
+                    ),
+                    CustomText(
+                      text: "Please enter verification code you've received",
+                      fontsize: 13.sp,
+                      textAlign: TextAlign.center,
+                      height: height(1.5),
+                      color: Color(0xFF707070),
+                    ),
+                    CustomText(
+                      text: "+965 ${widget.phoneNumber}",
+                      fontsize: 13.sp,
+                      textAlign: TextAlign.center,
+                      height: height(2.3),
+                      color: kPrimaryColor.withOpacity(0.6),
+                    ),
+                    SizedBox(
+                      height: height(30),
+                    ),
+                    PinPut(
+                        fieldsCount: 6,
+                        textStyle: TextStyle(
+                          fontSize: 30.sp,
+                          color: Color(0xFF7A7A7A),
+                        ),
+                        pinAnimationType: PinAnimationType.scale,
+                        eachFieldWidth: width(45),
+                        eachFieldHeight: height(55),
+                        focusNode: _pinPutFocusNode,
+                        controller: _pinPutController,
+                        submittedFieldDecoration: pinPutDecoration,
+                        selectedFieldDecoration: pinPutDecoration.copyWith(
+                            border: Border.all(
+                          color: kPrimaryColor,
+                        )),
+                        followingFieldDecoration: pinPutDecoration,
+                        onChanged: (value) {
+                          setState(() {
+                            pin = value;
+                          });
+                        }),
+                    SizedBox(
+                      height: height(24),
+                    ),
+                    CustomButton(
+                        radius: 6.0,
+                        isUpperCase: true,
+                        function: () async {
+                          // TODO: confirm sent code
+                          try {
+                            FocusScope.of(context).unfocus();
+                            await FirebaseAuth.instance
+                                .signInWithCredential(
+                                    PhoneAuthProvider.credential(
+                                        verificationId: verificationCode!,
+                                        smsCode: pin!))
+                                .then((value) async {
+                              if (value.user != null) {
+                                navigateTo(context,
+                                    cubit.nextSignUpScreen(context: context, logInModel: LogInModel(
+                                      
+                                    )));
+                              }
+                            });
+                          } catch (e) {
+                            FocusScope.of(context).unfocus();
+                            showToast(
+                                text: "Invalid otp", state: ToastState.ERROR);
+                          }
+                        },
+                        text: "Confirm"),
+                    SizedBox(
+                      height: height(16),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        // TODO: reste code function
+                        await _verifyPhone();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageIcon(
+                            AssetImage("assets/icons/resend_icon.png"),
+                          ),
+                          SizedBox(
+                            width: width(8),
+                          ),
+                          CustomText(
+                            text: "Resend Code",
+                            fontsize: 12.sp,
+                            textAlign: TextAlign.center,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
-          ),
-          buildTimer(),
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: PinPut(
-              fieldsCount: 6,
-              textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-              eachFieldWidth: 40.0,
-              eachFieldHeight: 55.0,
-              focusNode: _pinPutFocusNode,
-              controller: _pinPutController,
-              submittedFieldDecoration: pinPutDecoration,
-              selectedFieldDecoration: pinPutDecoration,
-              followingFieldDecoration: pinPutDecoration,
-              pinAnimationType: PinAnimationType.fade,
-              onSubmit: (pin) async {
-                try {
-                  FocusScope.of(context).unfocus();
-                  await FirebaseAuth.instance
-                      .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: _verificationCode!, smsCode: pin))
-                      .then((value) async {
-                    if (value.user != null) {
-                      showToast(text: "Verified", state: ToastState.SUCCESS);
-                      if(widget.categorie == "teacher") {
-                        navigateToAndFinish(context, TeacherLayoutView());
-                      }else {
-                        navigateToAndFinish(context, LayoutView());
-                      }
-                    }
-                  });
-                } catch (e) {
-                  FocusScope.of(context).unfocus();
-                  showToast(text: "Invalid otp", state: ToastState.ERROR);
-                }
-              },
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              children: [
-                Text("Didn't receive the code?", style: Theme.of(context).textTheme.bodyText2,),
-                SizedBox(width: 10,),
-                InkWell(
-                  onTap: () {
-                    _verifyPhone();
-                  },
-                  child: Text("RESEND", style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: kPrimaryColor,
-                  ),),
-                ),
-              ],
-            ),
-          )
-        ],
+          );
+        },
       ),
     );
   }
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+965${widget.phone}',
+        phoneNumber: '+20${widget.phoneNumber}',
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
               showToast(text: "Verified", state: ToastState.SUCCESS);
-              if(widget.categorie == "teacher") {
-                navigateToAndFinish(context, TeacherLayoutView());
-              }else {
-                navigateToAndFinish(context, LayoutView());
-              }
             }
-          }).catchError((error) { showToast(text: error.toString(), state: ToastState.ERROR);} );
+          }).catchError((error) {
+            showToast(text: error.toString(), state: ToastState.ERROR);
+          });
         },
         verificationFailed: (FirebaseAuthException e) {
           showToast(text: e.toString(), state: ToastState.ERROR);
         },
         codeSent: (String? verficationID, int? resendToken) {
           setState(() {
-            _verificationCode = verficationID;
+            verificationCode = verficationID;
           });
         },
         codeAutoRetrievalTimeout: (String verificationID) {
           setState(() {
-            _verificationCode = verificationID;
+            verificationCode = verificationID;
           });
         },
         timeout: Duration(seconds: 120));
-    showToast(text: "code sent", state: ToastState.SUCCESS);
   }
 
   @override
@@ -152,22 +218,5 @@ class _OTPViewState extends State<OTPView> {
     // TODO: implement initState
     super.initState();
     _verifyPhone();
-  }
-
-  Row buildTimer() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("This code will expired in "),
-        TweenAnimationBuilder(
-          tween: Tween(begin: 30.0, end: 0.0),
-          duration: Duration(seconds: 120),
-          builder: (_, dynamic value, child) => Text(
-            "00:${value.toInt()}",
-            style: TextStyle(color: kPrimaryColor),
-          ),
-        ),
-      ],
-    );
   }
 }

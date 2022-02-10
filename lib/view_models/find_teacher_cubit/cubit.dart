@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/services_model.dart';
 import 'package:movies_app/view_models/find_teacher_cubit/states.dart';
-import 'package:movies_app/widgets.dart';
+import 'package:movies_app/widgets/custom_toast.dart';
 
 class FindTeachersCubit extends Cubit<FindTeachersStates> {
   FindTeachersCubit() : super(FindTeachersStates());

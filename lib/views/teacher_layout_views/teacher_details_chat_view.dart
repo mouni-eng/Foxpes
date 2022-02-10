@@ -1,5 +1,4 @@
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
@@ -41,7 +40,7 @@ class TeacherDetailsChatView extends StatelessWidget {
                       width: 15.0,
                     ),
                     Text(
-                      userModel.name!,
+                      userModel.firstName!,
                     ),
                   ],
                 ),

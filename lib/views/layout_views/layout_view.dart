@@ -8,7 +8,7 @@ import 'package:movies_app/view_models/App_Cubit/cubit.dart';
 import 'package:movies_app/view_models/App_Cubit/states.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:movies_app/view_models/explore_cubit/cubit.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LayoutView extends StatefulWidget {
 
