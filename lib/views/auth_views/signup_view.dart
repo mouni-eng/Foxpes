@@ -1,21 +1,15 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/user_model.dart';
-import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/size_config.dart';
 import 'package:movies_app/translate/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:movies_app/views/auth_views/otp_verfication_view.dart';
 import 'package:movies_app/widgets/custom_button.dart';
 import 'package:movies_app/widgets/custom_dropdown.dart';
-import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:movies_app/widgets/custom_textformfield.dart';
-import 'package:movies_app/widgets/custom_toast.dart';
 
 class RegisterView extends StatelessWidget {
   @override
@@ -188,14 +182,14 @@ class RegisterView extends StatelessWidget {
                                 "Male",
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
-                              value: "Student",
+                              value: "Male",
                             ),
                             DropdownMenuItem<String>(
                               child: Text(
                                 "Female",
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
-                              value: "Teacher",
+                              value: "Female",
                             ),
                           ],
                           label: "Gender",
@@ -210,7 +204,7 @@ class RegisterView extends StatelessWidget {
                         context: context,
                         controller: _phoneEditingController,
                         type: TextInputType.phone,
-                        maxLength: 11,
+                        maxLength: 8,
                         validate: (value) {
                           if (value!.isEmpty) {
                             return "";
@@ -225,17 +219,25 @@ class RegisterView extends StatelessWidget {
                       SizedBox(
                         height: height(54),
                       ),
-                       CustomButton(
-                          function: () {
-                            if (_formKey.currentState!.validate()) {
-                              cubit.nextSignUpScreen(
-                                  context: context, logInModel: LogInModel());
-                            }
-                          },
-                          text: LocaleKeys.register.tr(),
-                          isUpperCase: true,
-                          radius: 6.0,
-                        ),
+                      CustomButton(
+                        function: () {
+                          if (_formKey.currentState!.validate()) {
+                            cubit.nextSignUpScreen(
+                              context: context,
+                              firstName: _firstNameEditingController.text,
+                              lastName: _lastNameEditingController.text,
+                              email: _emailEditingController.text,
+                              password: _passwordEditingController.text,
+                              phone: _phoneEditingController.text,
+                              gender: cubit.gender,
+                              category: cubit.category,
+                            );
+                          }
+                        },
+                        text: LocaleKeys.register.tr(),
+                        isUpperCase: true,
+                        radius: 6.0,
+                      ),
                       SizedBox(
                         height: height(70),
                       ),

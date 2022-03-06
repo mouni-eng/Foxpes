@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_231" data-name="Rectangle 231" width="16" height="16" transform="translate(155 188)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_12" data-name="Mask Group 12" transform="translate(-155 -188)" clip-path="url(#clip-path)">
+    <g id="bag_2_" data-name="bag (2)" transform="translate(155.282 188)">
+      <path id="Path_1001" data-name="Path 1001" d="M-325.011,521.627h14.692a.564.564,0,0,1,.565.565v8.476a.564.564,0,0,1-.565.565h-14.692a.564.564,0,0,1-.565-.565v-8.476A.564.564,0,0,1-325.011,521.627Z" transform="translate(325.576 -517.672)" fill="#735ff2"/>
+      <rect id="Rectangle_232" data-name="Rectangle 232" width="3.391" height="1.978" rx="0.448" transform="translate(6.498 2.825)" fill="none" stroke="#576d7e" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="0.5" stroke-width="0.448"/>
+      <path id="Path_1002" data-name="Path 1002" d="M-325.011,521.627a.564.564,0,0,0-.565.565v1.887a1.917,1.917,0,0,0,1.978,1.861h11.867a1.918,1.918,0,0,0,1.978-1.861v-1.887a.564.564,0,0,0-.565-.565Z" transform="translate(325.576 -517.672)" fill="#4d38d2"/>
+      <rect id="Rectangle_233" data-name="Rectangle 233" width="1.695" height="1.13" transform="translate(8.476 7.194) rotate(90)" fill="rgba(248,183,78,0.98)"/>
+      <rect id="Rectangle_234" data-name="Rectangle 234" width="2.26" height="12.432" transform="translate(2.26 1.695)" fill="#fc0"/>
+      <path id="Path_1003" data-name="Path 1003" d="M-323.783,532.616h2.26l-1.13,2.26Zm0-12.432v-.848a.846.846,0,0,1,.848-.848h.565a.846.846,0,0,1,.848.848v.848Z" transform="translate(326.044 -518.489)" fill="#e9eded"/>
+      <path id="Path_1004" data-name="Path 1004" d="M-323.111,531.041l.283.565.283-.565Z" transform="translate(326.219 -515.219)" fill="#34485c"/>
+      <rect id="Rectangle_235" data-name="Rectangle 235" width="2.26" height="0.565" transform="translate(2.26 1.695)" fill="#34485c"/>
+    </g>
+  </g>
+</svg>

@@ -9,11 +9,9 @@ import 'package:movies_app/translate/codegen_loader.g.dart';
 import 'package:movies_app/view_models/App_Cubit/cubit.dart';
 import 'package:movies_app/view_models/App_Cubit/states.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
-import 'package:movies_app/view_models/Services_cubit/cubit.dart';
+import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/view_models/bloc_observer.dart';
-import 'package:movies_app/view_models/explore_cubit/cubit.dart';
-import 'package:movies_app/view_models/find_teacher_cubit/cubit.dart';
-import 'package:movies_app/views/starting_views/onboarding_view.dart';
+import 'package:movies_app/view_models/find_partner_cubit/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,16 +39,8 @@ class Foxpes extends StatelessWidget {
             create: (BuildContext context) => AppCubit()
               ..getCacheData()
               ..getToken()),
-        BlocProvider(
-            create: (BuildContext context) => ExploreCubit()
-              ..getUserData()
-              ..getUserChats()),
-        BlocProvider(
-            create: (BuildContext context) => ServicesCubit()
-              ..getTeacherData()
-              ..getService()
-              ..getChats()),
-        BlocProvider(create: (BuildContext context) => FindTeachersCubit()),
+        BlocProvider(create: (BuildContext context) => ClientCubit()..getUserData()),
+        BlocProvider(create: (BuildContext context) => FindPartnerCubit()),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, states) {},
@@ -66,7 +56,7 @@ class Foxpes extends StatelessWidget {
                     debugShowCheckedModeBanner: false,
                     title: 'Foxpes',
                     theme: lightTheme,
-                    home: OnBoardingScreen(),
+                    home: cubit.chooseInitialPage(),
                   ));
         },
       ),

@@ -1,5 +1,34 @@
 class LogInModel {
-  String? email, phone, firstName, lastName, uid, image, token, gender, category, password, price, duration, aboutYou, birthDate, country, experience, careType, carNumber, idCardImage, licienceCardImage, carPlateImage, carImages, skills, faculty, teachIn, religion, status, degree, speaks;
+  String? email,
+      phone,
+      firstName,
+      lastName,
+      uid,
+      image,
+      token,
+      gender,
+      category,
+      password,
+      price,
+      duration,
+      aboutYou,
+      birthDate,
+      country,
+      experience,
+      careType,
+      carNumber,
+      idCardImage,
+      licienceCardImage,
+      carPlateImage,
+      skills,
+      faculty,
+      teachIn,
+      religion,
+      status,
+      active,
+      degree,
+      speaks;
+  List<dynamic>? carImages;
 
   LogInModel({
     this.phone,
@@ -31,6 +60,7 @@ class LogInModel {
     this.speaks,
     this.status,
     this.teachIn,
+    this.active,
   });
 
   LogInModel.fromJson(Map<String, dynamic> json) {
@@ -63,39 +93,41 @@ class LogInModel {
     token = json['token'];
     gender = json['gender'];
     category = json['category'];
+    active = json['active'];
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'firstName' : firstName,
-      'lastName' : lastName,
-      'password' : password,
-      'email' : email,
-      'phone' : phone,
-      'uid' : uid,
-      'aboutYou' : aboutYou,
-      'birthDate' : birthDate,
-      'carImages' : carImages,
-      'carNumber' : carNumber,
-      'carPlateImage' : carPlateImage,
-      'careType' : careType,
-      'country' : country,
-      'degree' : degree,
-      'duration' : duration,
-      'experience' : experience,
-      'faculty' : faculty,
-      'idCardImage' : idCardImage,
-      'licienceCardImage' : licienceCardImage,
-      'price' : price,
-      'religion' : religion,
-      'skills' : skills,
-      'speaks' : speaks,
-      'status' : status,
-      'teachIn' : teachIn,
-      'image' : image,
-      'token' : token,
-      'gender' : gender,
-      'category' : category,
+      'firstName': firstName,
+      'lastName': lastName,
+      'password': password,
+      'email': email,
+      'phone': phone,
+      'uid': uid,
+      'aboutYou': aboutYou,
+      'birthDate': birthDate,
+      'carImages': carImages,
+      'carNumber': carNumber,
+      'carPlateImage': carPlateImage,
+      'careType': careType,
+      'country': country,
+      'degree': degree,
+      'duration': duration,
+      'experience': experience,
+      'faculty': faculty,
+      'idCardImage': idCardImage,
+      'licienceCardImage': licienceCardImage,
+      'price': price,
+      'religion': religion,
+      'skills': skills,
+      'speaks': speaks,
+      'status': status,
+      'teachIn': teachIn,
+      'image': image,
+      'token': token,
+      'gender': gender,
+      'category': category,
+      'active': active,
     };
   }
 }

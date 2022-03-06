@@ -7,8 +7,8 @@ class LogInChangePasswordVisibilityState extends AuthStates {}
 class LogInLoadingState extends AuthStates {}
 
 class LogInSuccessState extends AuthStates {
-  final String uId;
-  LogInSuccessState({required this.uId});
+  final LogInModel logInModel;
+  LogInSuccessState({required this.logInModel});
 }
 
 class LogInErrorState extends AuthStates {
@@ -20,7 +20,7 @@ class SignUpLoadingState extends AuthStates {}
 
 class SignUpSuccessState extends AuthStates {
   final LogInModel? logInModel;
-  SignUpSuccessState({this.logInModel});
+  SignUpSuccessState({required this.logInModel});
 }
 
 class SignUpErrorState extends AuthStates {
@@ -30,7 +30,37 @@ class SignUpErrorState extends AuthStates {
 
 class SignUpChangeGenderState extends AuthStates {}
 
+class SignUpChangecarTypeState extends AuthStates {}
+
+class SignUpChangereligionState extends AuthStates {}
+
+class SignUpChangestatusState extends AuthStates {}
+
+class SignUpChangedegreeState extends AuthStates {}
+
+class SignUpChangespeakState extends AuthStates {}
+
 class SignUpChangeCategoryState extends AuthStates {}
+
+class SignUpChangeExperienceState extends AuthStates {}
+
+class SignUpChangeCountryState extends AuthStates {}
+
+class SignUpChangeskillsState extends AuthStates {}
+
+class SignUpChangefacultyState extends AuthStates {}
+
+class SignUpChangesubjectState extends AuthStates {}
+
+class SignUpChangedurationState extends AuthStates {}
+
+class SignUpChangebirthDateState extends AuthStates {}
+
+class SignUpChangechooseImageState extends AuthStates {}
+
+class SignUpGetUriSuccesState extends AuthStates {}
+
+class SignUpGetUriLoadingState extends AuthStates {}
 
 
 class CreateUserLoadingState extends AuthStates {}
@@ -45,6 +75,9 @@ class CreateUserErrorState extends AuthStates {
   CreateUserErrorState({required this.error});
 }
 
-class ProfileImagePickedSuccessState extends AuthStates {}
-class ProfileImagePickedErrorState extends AuthStates {}
+class ResetPasswordLoadingState extends AuthStates {}
+
+class ResetPasswordSuccessState extends AuthStates {}
+
+class ResetPasswordErrorState extends AuthStates {}
 

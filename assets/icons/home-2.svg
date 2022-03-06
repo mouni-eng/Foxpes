@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.097" height="20.097" viewBox="0 0 20.097 20.097">
+  <g id="vuesax_linear_home-2" data-name="vuesax/linear/home-2" transform="translate(-620 -188)">
+    <g id="home-2" transform="translate(620 188)">
+      <path id="Vector" d="M5.878.689,1.365,4.206A3.985,3.985,0,0,0,0,6.986v6.205a3.538,3.538,0,0,0,3.525,3.534h9.7A3.536,3.536,0,0,0,16.748,13.2V7.1a3.955,3.955,0,0,0-1.507-2.889L10.065.588A3.757,3.757,0,0,0,5.878.689Z" transform="translate(1.675 1.689)" fill="#735ff2" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Vector-2" data-name="Vector" d="M0,2.512V0" transform="translate(10.049 12.553)" fill="#735ff2" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <g id="Vector-3" data-name="Vector" fill="#735ff2" opacity="0">
+        <path d="M 19.34741592407227 19.34741592407227 L 0.7499960660934448 19.34741592407227 L 0.7499960660934448 0.7499960660934448 L 19.34741592407227 0.7499960660934448 L 19.34741592407227 19.34741592407227 Z" stroke="none"/>
+        <path d="M 1.499996185302734 1.499996185302734 L 1.499996185302734 18.59741592407227 L 18.59741592407227 18.59741592407227 L 18.59741592407227 1.499996185302734 L 1.499996185302734 1.499996185302734 M -3.814697265625e-06 -3.814697265625e-06 L 20.09741592407227 -3.814697265625e-06 L 20.09741592407227 20.09741592407227 L -3.814697265625e-06 20.09741592407227 L -3.814697265625e-06 -3.814697265625e-06 Z" stroke="none" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

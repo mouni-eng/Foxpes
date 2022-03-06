@@ -1,10 +1,11 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/models/category_model.dart';
 import 'package:movies_app/models/country_model.dart';
 import 'package:movies_app/models/onboarding_model.dart';
+import 'package:movies_app/models/slider_model.dart';
 import 'package:movies_app/models/subject_model.dart';
 import 'package:movies_app/services/helper/country_list.dart';
 
@@ -43,8 +44,22 @@ ThemeData lightTheme = ThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: kPrimaryColor,
       unselectedItemColor: Colors.grey,
-      backgroundColor: Color(0xFFEEFAFA),
-      elevation: 30.0,
+      backgroundColor: Colors.white,
+      elevation: 100,
+      selectedIconTheme: IconThemeData(
+        color: kPrimaryColor,
+      ),
+      unselectedIconTheme: IconThemeData(
+        color: kHintTextColor,
+      ),
+      selectedLabelStyle: TextStyle(
+        fontSize: 11.sp,
+        color: kPrimaryColor,
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontSize: 11.sp,
+        color: kHintTextColor,
+      ),
     ),
     textTheme: TextTheme(
       bodyText1: TextStyle(
@@ -56,6 +71,7 @@ ThemeData lightTheme = ThemeData(
       bodyText2: TextStyle(
         fontSize: 13.sp,
         color: kHintTextColor,
+        letterSpacing: 0,
         fontFamily: "Cairo",
       ),
       subtitle2: TextStyle(
@@ -92,30 +108,7 @@ String? uId;
 String? tokenMessages;
 String? categorie;
 
-List<String> fields = [
-  "Arabic",
-  "Art ",
-  "Biology",
-  "Chemistry",
-  "English",
-  "French",
-  "General",
-  "Geology",
-  "German",
-  "History",
-  "Italian",
-  "Math",
-  "Philosophy",
-  "Physics",
-  "Programming",
-  "Quran",
-  "Religion",
-  "Science",
-  "Spanish",
-  "Social Studies",
-];
-
-List<CountryModel> elements =
+List<CountryModel> countries =
     codes.map((json) => CountryModel.fromJson(json)).toList();
 
 List<String> faculties = [
@@ -130,10 +123,50 @@ List<String> faculties = [
   "Other",
 ];
 
+List<String> cars = [
+  "BYD",
+  "Chery",
+  "Cheveorlet",
+  "Citroen",
+  "Daewoo",
+  "Fiat",
+  "Dodge",
+  "Ford",
+  "Honda",
+  "Hummer",
+  "Hyundai",
+  "Infiniti",
+  "Jac",
+  "Jeep",
+  "Kia",
+  "MG",
+  "Mini",
+  "Mazda",
+  "Mitsubishi",
+  "Nissan",
+  "opel",
+  "Peugeot",
+  "Proton",
+  "Seat",
+  "Skoda",
+  "Subaru",
+  "Speranza",
+  "Toyota",
+  "Volkswagen",
+  "Volvo",
+  "Other make",
+];
+
 List<String> skills = [
   "grammer",
   "speaking",
   "listening",
+];
+
+List<String> religion = [
+  "Muslim",
+  "Cristian",
+  "Other",
 ];
 
 List<String> experience = [
@@ -151,14 +184,80 @@ List<String> education = [
   "Not educated",
 ];
 
+List<String> duration = [
+  "Per Day",
+  "Per Week",
+  "Per Month",
+];
+
 List<String> status = [
   "Single",
   "Taken",
 ];
 
-List<String> 
+List<CategoryModel> categoryList = [
+  CategoryModel(title: "Teacher", image: "assets/images/teacher-cat.svg"),
+  CategoryModel(title: "Driver", image: "assets/images/driver-cat.svg"),
+  CategoryModel(
+      title: "Baby Sitter", image: "assets/images/baby-sitter-cat.svg"),
+];
 
-List<String> fields = [
+List<SliderModel> sliderList = [
+  SliderModel(
+    title: "Find Your\nTeacher",
+    subTitle: "Find best teachers in all\nsubjects you want",
+    image: "assets/images/slider-1.svg",
+    top: -18,
+    left: 90,
+  ),
+  SliderModel(
+    title: "Find Your\nDriver",
+    subTitle: "Find a professional\ndriver to drive you any\nplaces.",
+    image: "assets/images/slider-2.svg",
+    top: -25,
+    left: 80,
+  ),
+  SliderModel(
+    title: "Find Your\nBabysitter",
+    subTitle: "Find a suittable sitter to\ntake care of your child",
+    image: "assets/images/slider-3.svg",
+    top: -28,
+    left: 200,
+  ),
+];
+
+
+
+List<String> language = [
+  "English",
+  "Arabic",
+  "Other",
+];
+
+List<String> gender = [
+  "Male",
+  "Female",
+];
+
+List<OnBoardingModel> onBoardingList = [
+  OnBoardingModel(
+      title: "Discover Teachers",
+      image: "assets/images/Mask Group 46.png",
+      subtitle:
+          "You can find teachers and chat with them via voice or video call"),
+  OnBoardingModel(
+      title: "Find Baby Sitter",
+      image: "assets/images/Mask Group 43.png",
+      subtitle:
+          "find the best sitter for your child and keep them safe & comfortable"),
+  OnBoardingModel(
+      title: "Deal With Driver",
+      image: "assets/images/Mask Group 44.png",
+      subtitle:
+          "Discover the best driver for your child's school trip or to any place you want"),
+];
+
+List<String> subjects = [
   "Arabic",
   "Art ",
   "Biology",
@@ -179,6 +278,15 @@ List<String> fields = [
   "Science",
   "Spanish",
   "Social Studies",
+  "Descriptive sign language",
+  "Speech and language therapy",
+  "Turkey",
+  "Economics",
+  "Accounting",
+  "Engineering",
+  "Law",
+  "Statistics",
+  "geoghraphy",
 ];
 
 List<SubjectsModel> subjectsList = [

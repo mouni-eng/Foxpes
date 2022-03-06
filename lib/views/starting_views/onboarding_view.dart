@@ -115,7 +115,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             if (isLast == true)
               CustomButton(
                 function: () {
-                  navigateToAndFinish(context, LoginView());
+                  CacheHelper.saveData(
+                    key: 'onBoarding',
+                    value: true,
+                  ).then((value) {
+                    if (value) {
+                      navigateToAndFinish(context, LoginView());
+                    }
+                  });
                 },
                 text: "Get Started",
                 isUpperCase: true,

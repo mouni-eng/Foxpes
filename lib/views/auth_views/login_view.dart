@@ -1,21 +1,16 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/widgets/custom_text.dart';
-import 'package:movies_app/widgets/custom_toast.dart';
 import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/size_config.dart';
 import 'package:movies_app/translate/locale_keys.g.dart';
-import 'package:movies_app/view_models/App_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/forgot_password_view.dart';
 import 'package:movies_app/views/auth_views/signup_view.dart';
-import 'package:movies_app/views/layout_views/layout_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/widgets/custom_button.dart';
@@ -36,28 +31,7 @@ class LoginView extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: BlocConsumer<AuthCubit, AuthStates>(
-        listener: (context, state) {
-          if (state is LogInSuccessState) {
-            CacheHelper.saveData(
-              key: 'uId',
-              value: state.uId,
-            ).then((value) {
-              CacheHelper.saveData(key: "categorie", value: "user")
-                  .then((value) {
-                if (value) {
-                  AppCubit.get(context).getCacheData();
-                  navigateToAndFinish(
-                    context,
-                    LayoutView(),
-                  );
-                }
-              });
-            });
-            showToast(text: "LogIn Success", state: ToastState.SUCCESS);
-          } else if (state is LogInErrorState) {
-            showToast(text: state.error.toString(), state: ToastState.ERROR);
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           AuthCubit cubit = AuthCubit.get(context);
           return Stack(
@@ -172,7 +146,7 @@ class LoginView extends StatelessWidget {
                                   .textTheme
                                   .subtitle2!
                                   .copyWith(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     color: kPrimaryColor,
                                     fontSize: 13.sp,
                                     height: 0,
@@ -190,8 +164,10 @@ class LoginView extends StatelessWidget {
                             function: () {
                               if (_formKey.currentState!.validate()) {
                                 cubit.signIn(
-                                    email: _emailEditingController.text,
-                                    password: _passwordEditingController.text);
+                                  email: _emailEditingController.text,
+                                  password: _passwordEditingController.text,
+                                  context: context,
+                                );
                               }
                             },
                             text: LocaleKeys.login.tr(),
