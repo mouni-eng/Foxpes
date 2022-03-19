@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/views/auth_views/upload_pic_view.dart';
 import 'package:movies_app/widgets/custom_button.dart';
 import 'package:movies_app/widgets/custom_navigation.dart';
@@ -39,7 +41,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
     return Scaffold(
       appBar: AppBar(
         title:
-            Text("Confirm Code", style: Theme.of(context).textTheme.headline1),
+            Text(LocaleKeys.confirmCode.tr(), style: Theme.of(context).textTheme.headline1),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -58,7 +60,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                   height: height(25),
                 ),
                 CustomText(
-                  text: "Enter Verification Code",
+                  text: LocaleKeys.enterVerificationCode.tr(),
                   fontsize: 18.sp,
                   textAlign: TextAlign.center,
                   height: height(1.5),
@@ -68,7 +70,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                   height: height(16),
                 ),
                 CustomText(
-                  text: "Please enter verification code you've received",
+                  text: LocaleKeys.pleaseEnterVerification.tr(),
                   fontsize: 13.sp,
                   textAlign: TextAlign.center,
                   height: height(1.5),
@@ -133,7 +135,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                         showToast(text: "Invalid otp", state: ToastState.ERROR);
                       }
                     },
-                    text: "Confirm"),
+                    text: LocaleKeys.confirm.tr()),
                 SizedBox(
                   height: height(16),
                 ),
@@ -152,7 +154,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                         width: width(8),
                       ),
                       CustomText(
-                        text: "Resend Code",
+                        text: LocaleKeys.resendCode.tr(),
                         fontsize: 12.sp,
                         textAlign: TextAlign.center,
                         color: Colors.black,

@@ -1,12 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/onboarding_model.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/views/auth_views/login_view.dart';
 import 'package:movies_app/views/starting_views/components/onboarding_build.dart';
 import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:movies_app/widgets/custom_button.dart';
+import 'package:movies_app/widgets/custom_profile_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -21,6 +25,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    List<OnBoardingModel> onBoardingList = [
+  OnBoardingModel(
+      title: LocaleKeys.discoverTeachers.tr(),
+      image: "assets/images/Mask Group 46.png",
+      subtitle:
+          LocaleKeys.youcanfindteachers.tr()),
+  OnBoardingModel(
+      title: LocaleKeys.findBabySitter.tr(),
+      image: "assets/images/Mask Group 43.png",
+      subtitle:
+          LocaleKeys.findthebestsitter.tr()),
+  OnBoardingModel(
+      title: LocaleKeys.dealWithDriver.tr(),
+      image: "assets/images/Mask Group 44.png",
+      subtitle:
+          LocaleKeys.discoverthebestdriver.tr()),
+];
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -46,6 +67,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     ),
                     child: TextButton(
                       onPressed: () {
+                        showDialog(
+                                  barrierColor: Colors.black.withOpacity(0.8),
+                                  context: context,
+                                  builder: (context) => ChangeLanguageWidget());
+                        
                         // TODO: change language
                       },
                       style: TextButton.styleFrom(
@@ -124,7 +150,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     }
                   });
                 },
-                text: "Get Started",
+                text: LocaleKeys.getStarted.tr(),
                 isUpperCase: true,
               ),
             if (isLast != true)
@@ -136,14 +162,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         navigateToAndFinish(context, LoginView());
                       },
                       child: Text(
-                        "Skip",
+                        LocaleKeys.sKIP.tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.black,
                         ),
                       )),
                   CustomButton(
-                    text: "Next",
+                    text: LocaleKeys.next.tr(),
                     radius: 6,
                     width: width(89),
                     function: () {

@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/view_models/Client_cubit/states.dart';
 import 'package:movies_app/widgets/custom_button.dart';
@@ -15,14 +17,14 @@ import 'package:movies_app/widgets/custom_text.dart';
 class ClientProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     var _formKey = GlobalKey<FormState>();
     TextEditingController _emailEditingController = TextEditingController();
     TextEditingController _firstNameEditingController = TextEditingController();
     TextEditingController _lastNameEditingController = TextEditingController();
     TextEditingController _phoneEditingController = TextEditingController();
     TextEditingController _birthDateEditingController = TextEditingController();
-    TextEditingController _experienceEditingController =
-        TextEditingController();
+    TextEditingController _experienceEditingController = TextEditingController();
     TextEditingController _priceEditingController = TextEditingController();
     TextEditingController _durationEditingController = TextEditingController();
     TextEditingController _bioEditingController = TextEditingController();
@@ -32,6 +34,7 @@ class ClientProfileView extends StatelessWidget {
     TextEditingController _degreeEditingController = TextEditingController();
     TextEditingController _statusEditingController = TextEditingController();
     TextEditingController _speakEditingController = TextEditingController();
+    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,7 +48,7 @@ class ClientProfileView extends StatelessWidget {
           ),
         ),
         title: CustomText(
-          text: "My Profile",
+          text: LocaleKeys.profile.tr(),
           fontsize: 18.sp,
           color: kSecondaryColor,
           fontWeight: FontWeight.w600,
@@ -86,6 +89,9 @@ class ClientProfileView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: height(15),
+                    ),
                     Center(
                       child: SizedBox(
                         height: height(115),
@@ -139,7 +145,7 @@ class ClientProfileView extends StatelessWidget {
                             "${cubit.logInModel!.firstName} ${cubit.logInModel!.lastName}",
                         fontsize: 17.sp,
                         color: kSecondaryColor,
-                        height: height(1.4),
+                        height: 1.2,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -147,14 +153,14 @@ class ClientProfileView extends StatelessWidget {
                       child: CustomText(
                           text: cubit.logInModel!.email,
                           fontsize: 11.sp,
-                          height: height(1.6),
+                          height: 1,
                           color: kPrimaryColor),
                     ),
                     SizedBox(
                       height: height(34),
                     ),
                     CustomText(
-                        text: "Personal Info",
+                        text: LocaleKeys.personalInfo.tr(),
                         fontsize: 15.sp,
                         color: kSecondaryColor),
                     SizedBox(
@@ -234,7 +240,7 @@ class ClientProfileView extends StatelessWidget {
                               ));
                             }
                           },
-                          text: "save"),
+                          text: LocaleKeys.save.tr()),
                       fallback: (context) => Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),
@@ -273,7 +279,7 @@ class FirstProfileFields extends StatelessWidget {
       children: [
         ProfileFormField(
           controller: firstNameEditingController,
-          label: "First Name:",
+          label: "${LocaleKeys.name.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -286,7 +292,7 @@ class FirstProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: lastNameEditingController,
-          label: "Last Name:",
+          label: "${LocaleKeys.lastName.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -299,7 +305,7 @@ class FirstProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: emailEditingController,
-          label: "Email:",
+          label: "${LocaleKeys.email.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -312,7 +318,7 @@ class FirstProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: phoneEditingController,
-          label: "Phone Number:",
+          label: "${LocaleKeys.phoneNumber.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -342,7 +348,7 @@ class SecondProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: birthDateEditingController,
-          label: "Birthdate:",
+          label: "${LocaleKeys.birthdate.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -355,7 +361,7 @@ class SecondProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: experienceEditingController,
-          label: "Experience:",
+          label: "${LocaleKeys.experience.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -387,13 +393,13 @@ class PaymentProfileFields extends StatelessWidget {
           height: height(16),
         ),
         CustomText(
-            text: "Payment Info", fontsize: 15.sp, color: kSecondaryColor),
+            text: LocaleKeys.paymentInfo.tr(), fontsize: 15.sp, color: kSecondaryColor),
         SizedBox(
           height: height(15),
         ),
         ProfileFormField(
           controller: priceEditingController,
-          label: "Price:",
+          label: "${LocaleKeys.price.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -406,7 +412,7 @@ class PaymentProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: durationEditingController,
-          label: "duration:",
+          label: "${LocaleKeys.duration.tr()}",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -417,7 +423,7 @@ class PaymentProfileFields extends StatelessWidget {
         SizedBox(
           height: height(16),
         ),
-        CustomText(text: "Bio:", fontsize: 15.sp, color: kSecondaryColor),
+        CustomText(text: LocaleKeys.bio.tr(), fontsize: 15.sp, color: kSecondaryColor),
         SizedBox(
           height: height(15),
         ),
@@ -499,7 +505,7 @@ class TeacherProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: skillsEditingController,
-          label: "Skills:",
+          label: "${LocaleKeys.skills.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -512,7 +518,7 @@ class TeacherProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: teachInEditingController,
-          label: "Teach In:",
+          label: "${LocaleKeys.teachIn.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -547,7 +553,7 @@ class BabySitterProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: religionEditingController,
-          label: "Religion:",
+          label: "${LocaleKeys.religion.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -560,7 +566,7 @@ class BabySitterProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: statusEditingController,
-          label: "Status:",
+          label: "${LocaleKeys.status.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -573,7 +579,7 @@ class BabySitterProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: degreeEditingController,
-          label: "Degree:",
+          label: "${LocaleKeys.degree.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";
@@ -586,7 +592,7 @@ class BabySitterProfileFields extends StatelessWidget {
         ),
         ProfileFormField(
           controller: speakEditingController,
-          label: "Speak:",
+          label: "${LocaleKeys.speaking.tr()}:",
           validate: (value) {
             if (value!.isEmpty) {
               return "";

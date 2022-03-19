@@ -22,7 +22,7 @@ class OnBoardingBuild extends StatelessWidget {
         CustomText(
           text: model.title!,
           fontsize: 20.sp,
-          height: height(1.1),
+          height: 1.1,
           fontWeight: FontWeight.w600,
           color: Colors.black,
         ),
@@ -32,7 +32,7 @@ class OnBoardingBuild extends StatelessWidget {
         CustomText(
           text: model.subtitle!,
           textAlign: TextAlign.center,
-          height: height(1.4),
+          height: 1,
           fontsize: 16.sp,
           fontWeight: FontWeight.normal,
           color: kOnBoardingTextColor,

@@ -1,44 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
-import 'package:movies_app/models/teacher_model.dart';
+import 'package:movies_app/main.dart';
+import 'package:movies_app/view_models/Client_cubit/cubit.dart';
+import 'package:movies_app/views/client_views/messages_view.dart';
+import 'package:movies_app/views/client_views/profile_view.dart';
 
 class NotificationCenter {
+  static final _notifications = FlutterLocalNotificationsPlugin();
 
-  static const _fcmUrl = "https://fcm.googleapis.com/fcm/send";
-  static const _Key = "key=AAAASBdGCYo:APA91bFncqR4cfEKKQ7tgAJqcn1B3W5ZeXeKGJH_LG31Q2eSP-LkPMu44VZeuo_EbfFzap_HHDQp1NfdCnCEwiT5AWFPTncy33VqNjrOnNhKIec3fleNRH-d_k6_0RUDLikJIPhc5n-i";
-
-  Map<String, String> headers = {
-    'Authorization' : _Key,
-    'Content-Type' : 'application/json'
-  };
-
-
-  Future<String> sendMessageNotification({
-  required String token, title, body, name, image, uid,
-}) async{
-    var messageBody = jsonEncode({
-      "to": token,
-      "notification": {
-        "title": title,
-        "body": body,
-        "mutable_content": true,
-        "sound": "Tri-tone"
-      },
-
-      "data": {
-        "type" : "chat",
-        "name" : name,
-        "image" : image,
-        "uid" : uid,
-        "url": body,
-        "dl": "<deeplink action on tap of notification>"
-      }
-    });
-    http.Response response = await http.post(Uri.parse(_fcmUrl), headers: headers, body: messageBody);
-    return response.body;
+  Future initNotification() async {
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    await _notifications.initialize(initializationSettings,
+        onSelectNotification: onSelectionMethod);
   }
 
+  void onSelectionMethod(String? payload) {
+    print(payload);
+    ClientCubit.get(Foxpes.navigatorKey.currentContext).changeBottomNav(1);
+  }
 
+  static Future _notificationDetails() async {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        "Foxpes",
+        "FoxpesChannel",
+        importance: Importance.max,
+      ),
+      iOS: IOSNotificationDetails(),
+    );
+  }
+
+  static Future showNotification({
+    required String title,
+    required String body,
+  }) async {
+    _notifications.show(0, title, body, await _notificationDetails());
+  }
 }

@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:movies_app/models/onboarding_model.dart';
 import 'package:movies_app/models/slider_model.dart';
 import 'package:movies_app/models/subject_model.dart';
 import 'package:movies_app/services/helper/country_list.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 
 ThemeData lightTheme = ThemeData(
     accentColor: kPrimaryColor,
@@ -175,7 +177,7 @@ List<String> experience = [
   "6 years",
   "8 years",
   "10 years",
-  "More than 10 years",
+  "+10 years",
 ];
 
 List<String> education = [
@@ -185,6 +187,7 @@ List<String> education = [
 ];
 
 List<String> duration = [
+  "Per Hour",
   "Per Day",
   "Per Week",
   "Per Month",
@@ -202,31 +205,6 @@ List<CategoryModel> categoryList = [
       title: "Baby Sitter", image: "assets/images/baby-sitter-cat.svg"),
 ];
 
-List<SliderModel> sliderList = [
-  SliderModel(
-    title: "Find Your\nTeacher",
-    subTitle: "Find best teachers in all\nsubjects you want",
-    image: "assets/images/slider-1.svg",
-    top: -18,
-    left: 90,
-  ),
-  SliderModel(
-    title: "Find Your\nDriver",
-    subTitle: "Find a professional\ndriver to drive you any\nplaces.",
-    image: "assets/images/slider-2.svg",
-    top: -25,
-    left: 80,
-  ),
-  SliderModel(
-    title: "Find Your\nBabysitter",
-    subTitle: "Find a suittable sitter to\ntake care of your child",
-    image: "assets/images/slider-3.svg",
-    top: -28,
-    left: 200,
-  ),
-];
-
-
 
 List<String> language = [
   "English",
@@ -239,27 +217,14 @@ List<String> gender = [
   "Female",
 ];
 
-List<OnBoardingModel> onBoardingList = [
-  OnBoardingModel(
-      title: "Discover Teachers",
-      image: "assets/images/Mask Group 46.png",
-      subtitle:
-          "You can find teachers and chat with them via voice or video call"),
-  OnBoardingModel(
-      title: "Find Baby Sitter",
-      image: "assets/images/Mask Group 43.png",
-      subtitle:
-          "find the best sitter for your child and keep them safe & comfortable"),
-  OnBoardingModel(
-      title: "Deal With Driver",
-      image: "assets/images/Mask Group 44.png",
-      subtitle:
-          "Discover the best driver for your child's school trip or to any place you want"),
+List<String> genderTr = [
+  LocaleKeys.male.tr(),
+  LocaleKeys.female.tr(),
 ];
 
 List<String> subjects = [
   "Arabic",
-  "Art ",
+  "Art",
   "Biology",
   "Chemistry",
   "English",

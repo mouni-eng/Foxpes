@@ -65,56 +65,75 @@ class PopularTeachersCard extends StatelessWidget {
             SizedBox(
               width: width(16),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                    text: "${logInModel.firstName} ${logInModel.lastName}",
-                    fontsize: 14.sp,
-                    height: height(1.6),
-                    fontWeight: FontWeight.w500,
-                    color: kSecondaryColor),
-                CustomText(
-                    text: logInModel.teachIn,
-                    fontsize: 14.sp,
-                    height: height(1.8),
-                    color: kHintTextColor),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/rating.svg",
-                      width: width(14),
-                      height: height(13),
-                    ),
-                    CustomText(
-                        text:
-                            " ${ClientCubit.get(context).popularTeachersRating![index] ?? 0}",
-                        fontsize: 12.sp,
-                        color: kHintTextColor),
-                    SizedBox(
-                      width: width(22),
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/location.svg",
-                      width: width(14),
-                      height: height(13),
-                    ),
-                    CustomText(
-                        text: "  ${logInModel.country}",
-                        fontsize: 12.sp,
-                        color: kHintTextColor),
-                  ],
-                )
-              ],
-            ),
-            Spacer(),
-            CustomText(
-              text:
-                  "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
-              fontsize: 12.sp,
-              color: kPrimaryColor,
-              fontWeight: FontWeight.bold,
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: CustomText(
+                            text:
+                                "${logInModel.firstName} ${logInModel.lastName}",
+                            fontsize: 14.sp,
+                            maxLines: 1,
+                            height: 1.2,
+                            fontWeight: FontWeight.w500,
+                            color: kSecondaryColor),
+                      ),
+                      Flexible(
+                        child: CustomText(
+                          text:
+                              "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
+                          fontsize: 12.sp,
+                          color: kPrimaryColor,
+                          height: 1.2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height(5),
+                  ),
+                  CustomText(
+                      text: logInModel.teachIn,
+                      fontsize: 14.sp,
+                      height: 1,
+                      color: kHintTextColor),
+                  SizedBox(
+                    height: height(5),
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/rating.svg",
+                        width: width(14),
+                        height: height(13),
+                      ),
+                      CustomText(
+                          text:
+                              " ${ClientCubit.get(context).popularTeachersRating![index] ?? 0}",
+                          fontsize: 12.sp,
+                          color: kHintTextColor),
+                      SizedBox(
+                        width: width(22),
+                      ),
+                      SvgPicture.asset(
+                        "assets/icons/location.svg",
+                        width: width(14),
+                        height: height(13),
+                      ),
+                      CustomText(
+                          text: "  ${logInModel.country}",
+                          fontsize: 12.sp,
+                          color: kHintTextColor),
+                    ],
+                  )
+                ],
+              ),
             ),
           ]),
         ),

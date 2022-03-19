@@ -1,10 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/widgets/custom_button.dart';
@@ -19,7 +21,7 @@ class UploadProfilePictureView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Photo", style: Theme.of(context).textTheme.headline1),
+        title: Text(LocaleKeys.addPhoto.tr(), style: Theme.of(context).textTheme.headline1),
       ),
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {},
@@ -57,26 +59,25 @@ class UploadProfilePictureView extends StatelessWidget {
                     Positioned(
                       bottom: height(10),
                       right: width(20),
-                      child: Material(
-                        color: Colors.white,
-                        elevation: 2,
-                        borderRadius: BorderRadius.circular(25),
-                        child: Container(
-                          width: width(49),
-                          height: height(49),
-                          padding: EdgeInsets.all(width(12)),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
+                      child: InkWell(
+                        onTap: () {
+                          cubit.chooseImagre(key: "personalImage");
+                        },
+                        child: Material(
+                          color: Colors.white,
+                          elevation: 2,
+                          borderRadius: BorderRadius.circular(25),
+                          child: Container(
+                            width: width(49),
+                            height: height(49),
+                            padding: EdgeInsets.all(width(12)),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: SvgPicture.asset(
+                                    "assets/images/camera-icon.svg"),
                           ),
-                          child: IconButton(
-                              padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
-                              onPressed: () {
-                                cubit.chooseImagre(key: "personalImage");
-                              },
-                              icon: SvgPicture.asset(
-                                  "assets/images/camera-icon.svg")),
                         ),
                       ),
                     )
@@ -85,7 +86,7 @@ class UploadProfilePictureView extends StatelessWidget {
                 SizedBox(
                   height: height(15),
                 ),
-                Text("Add Your Photo To Let People Knows You",
+                Text(LocaleKeys.uploadPhoto.tr(),
                     style: Theme.of(context).textTheme.subtitle2!.copyWith(
                           color: kHintTextColor,
                         )),
@@ -108,7 +109,7 @@ class UploadProfilePictureView extends StatelessWidget {
                             state: ToastState.ERROR);
                       }
                     },
-                    text: "upload photo",
+                    text: LocaleKeys.uploadPhotoButton.tr(),
                     isUpperCase: true,
                   ),
                   fallback: (context) => Center(
@@ -125,7 +126,7 @@ class UploadProfilePictureView extends StatelessWidget {
                       cubit.signUp(logInModel: logInModel, context: context);
                     },
                     child: Text(
-                      "SKIP",
+                      LocaleKeys.sKIP.tr(),
                       style: Theme.of(context).textTheme.subtitle2!,
                     ),
                   ),

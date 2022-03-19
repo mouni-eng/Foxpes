@@ -1,14 +1,17 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 
 class CustomDatePicker extends StatelessWidget {
 
   final void Function(String?)? onChange;
+  final String? Function(String?)? validate; 
 
-  CustomDatePicker({required this.onChange});
+  CustomDatePicker({required this.onChange, required this.validate});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class CustomDatePicker extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyText2,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: "Birthdate",
+          labelText: LocaleKeys.birthdate.tr(),
           hintText: "21/02/1995",
           suffixIcon: Padding(
             padding: EdgeInsets.all(13),
@@ -50,12 +53,7 @@ class CustomDatePicker extends StatelessWidget {
         lastDate: DateTime(2100),
         dateLabelText: 'Date',
         onChanged: onChange,
-        validator: (val) {
-          if (val == null) {
-            return "";
-          }
-          return null;
-        },
+        validator: validate,
         onSaved: (val) => print(val),
       ),
     );

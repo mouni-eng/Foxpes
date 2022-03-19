@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
 import 'package:movies_app/view_models/find_partner_cubit/cubit.dart';
 import 'package:movies_app/view_models/find_partner_cubit/states.dart';
@@ -11,7 +10,6 @@ import 'package:movies_app/views/client_views/components/partner_widget.dart';
 import 'package:movies_app/widgets/custom_filtring_widget.dart';
 import 'package:movies_app/widgets/custom_search_form_field.dart';
 import 'package:movies_app/widgets/custom_text.dart';
-import 'package:movies_app/widgets/custom_toast.dart';
 
 class FindPartnerView extends StatelessWidget {
   final String category;
@@ -44,6 +42,9 @@ class FindPartnerView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: height(5),
+                    ),
                     SearchFormField(
                       searchEditingController: _searchEditingController,
                       hint: "Search your ${category.toLowerCase()}",

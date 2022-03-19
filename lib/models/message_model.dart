@@ -2,6 +2,9 @@ class MessageModel {
   String? senderId;
   String? receiverId;
   String? dateTime;
+  String? token;
+  String? senderName;
+  String? image;
   String? text;
   bool? isOpened;
 
@@ -10,6 +13,9 @@ class MessageModel {
     this.receiverId,
     this.dateTime,
     this.text,
+    this.senderName,
+    this.token,
+    this.image,
     this.isOpened,
   });
 
@@ -18,6 +24,9 @@ class MessageModel {
     receiverId = json['receiverId'];
     dateTime = json['dateTime'];
     text = json['text'];
+    senderName = json['senderName'];
+    token = json['token'];
+    image = json['image'];
     isOpened = json['isOpened'];
   }
 
@@ -27,6 +36,9 @@ class MessageModel {
       'receiverId': receiverId,
       'dateTime': dateTime,
       'text': text,
+      'senderName': senderName,
+      'token': token,
+      'image': image,
       'isOpened': isOpened,
     };
   }

@@ -1,12 +1,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/main.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/widgets/custom_text.dart';
 import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/size_config.dart';
-import 'package:movies_app/translate/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/forgot_password_view.dart';
@@ -57,18 +58,18 @@ class LoginView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: "Welcome back",
+                          text: LocaleKeys.welcome_back.tr(),
                           fontsize: 30.sp,
                           color: Colors.white,
+                          height: 2,
                           fontWeight: FontWeight.w600,
                         ),
                         CustomText(
-                          text:
-                              "Sign in now with your email and password, enjoy.",
+                          text: LocaleKeys.signin_now.tr(),
                           fontsize: 18.sp,
                           color: Colors.white,
                           fontWeight: FontWeight.normal,
-                          height: height(1.4),
+                          height: 1,
                         ),
                       ],
                     ),
@@ -149,7 +150,7 @@ class LoginView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                     color: kPrimaryColor,
                                     fontSize: 13.sp,
-                                    height: 0,
+                                    height: 1,
                                   ),
                             ),
                           ),
@@ -193,7 +194,8 @@ class LoginView extends StatelessWidget {
                                   ),
                             ),
                             TextButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  
                                   navigateTo(context, RegisterView());
                                 },
                                 child: Text(

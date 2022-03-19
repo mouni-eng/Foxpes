@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
+import 'package:movies_app/models/category_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/view_models/Client_cubit/states.dart';
 import 'package:movies_app/views/client_views/components/category_widget.dart';
@@ -18,6 +21,12 @@ import 'package:movies_app/widgets/custom_text.dart';
 class ClientHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<CategoryModel> categoryListTr = [
+      CategoryModel(title: LocaleKeys.teacher.tr(), image: "assets/images/teacher-cat.svg"),
+      CategoryModel(title: LocaleKeys.driver.tr(), image: "assets/images/driver-cat.svg"),
+      CategoryModel(
+      title: LocaleKeys.babySitter.tr(), image: "assets/images/baby-sitter-cat.svg"),
+    ];
     return BlocConsumer<ClientCubit, ClientStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -50,31 +59,51 @@ class ClientHomeView extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CustomText(
-                            text: "Hello",
+                            text: LocaleKeys.hello.tr(),
                             fontsize: 11.sp,
-                            height: height(1.6),
+                            height: 1.1,
                             color: kHintTextColor),
+                        SizedBox(
+                          height: height(3),
+                        ),
                         CustomText(
                           text:
                               "${cubit.logInModel!.firstName} ${cubit.logInModel!.lastName}",
                           fontsize: 15.sp,
-                          height: height(1.4),
+                          height: 1,
                           color: kSecondaryColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ],
                     ),
                     Spacer(),
-                    IconButton(
-                        constraints: BoxConstraints(),
-                        padding: EdgeInsets.zero,
-                        onPressed: () {},
-                        icon: SvgPicture.asset(
-                          "assets/icons/notification.svg",
-                          height: height(20.5),
-                        )),
+                    Stack(
+                      children: [
+                        if (cubit.notificationList.length != 0)
+                          Positioned(
+                            right: 2.0,
+                            top: 2.0,
+                            child: Container(
+                              width: width(10),
+                              height: height(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                          ),
+                        SizedBox(
+                              height: height(20.5),
+                              width: width(20.5),
+                              child: SvgPicture.asset(
+                                "assets/icons/notification.svg",
+                              ),
+                            ),
+                      ],
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -90,7 +119,7 @@ class ClientHomeView extends StatelessWidget {
                   height: height(14),
                 ),
                 CustomText(
-                    text: "Services",
+                    text: LocaleKeys.services.tr(),
                     fontsize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: kSecondaryColor),
@@ -110,7 +139,7 @@ class ClientHomeView extends StatelessWidget {
                                       category: categoryList[index].title));
                             },
                             child: CategoryBox(
-                              categoryModel: categoryList[index],
+                              categoryModel: categoryListTr[index],
                             ),
                           ),
                       separatorBuilder: (context, index) => SizedBox(
@@ -125,7 +154,7 @@ class ClientHomeView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                        text: "Popular Teachers",
+                        text: LocaleKeys.info.tr(),
                         fontsize: 14.sp,
                         fontWeight: FontWeight.w500,
                         color: kSecondaryColor),
@@ -135,7 +164,7 @@ class ClientHomeView extends StatelessWidget {
                             context, FindPartnerView(category: "Teacher"));
                       },
                       child: CustomText(
-                          text: "See All",
+                          text: LocaleKeys.infoBar.tr(),
                           fontsize: 12.sp,
                           color: kPrimaryColor),
                     ),

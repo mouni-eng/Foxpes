@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/views/client_views/chat_details_view.dart';
 import 'package:movies_app/widgets/custom_button.dart';
@@ -19,201 +20,237 @@ class PartnerDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ClientCubit cubit = ClientCubit.get(context);
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width(width(16))),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              logInModel.image != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: CachedNetworkImage(
-                        imageUrl: logInModel.image!,
-                        width: width(68),
-                        height: height(68),
-                        fit: BoxFit.cover,
-                      ))
-                  : SvgPicture.asset(
-                      "assets/images/profile-circle.svg",
-                      width: width(68),
-                      height: height(68),
-                      fit: BoxFit.cover,
-                    ),
-              SizedBox(
-                width: width(16),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: SizeConfig.screenHeight!,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  CustomText(
-                      text: "${logInModel.firstName} ${logInModel.lastName}",
-                      fontsize: 14.sp,
-                      height: height(2),
-                      fontWeight: FontWeight.w600,
-                      color: kSecondaryColor),
-                  if (logInModel.category == "Teacher")
-                    CustomText(
-                        text: "${logInModel.teachIn} Teacher",
-                        fontsize: 14.sp,
-                        height: height(2.5),
-                        color: kPrimaryColor),
-                  if (logInModel.category == "Driver")
-                    CustomText(
-                        text: logInModel.careType,
-                        fontsize: 14.sp,
-                        height: height(1.8),
-                        color: kHintTextColor),
-                  if (logInModel.category == "Baby Sitter")
-                    CustomText(
-                        text: logInModel.degree,
-                        fontsize: 14.sp,
-                        height: height(1.8),
-                        color: kHintTextColor),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width(width(16))),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  logInModel.image != null
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          child: CachedNetworkImage(
+                                            imageUrl: logInModel.image!,
+                                            width: width(68),
+                                            height: height(68),
+                                            fit: BoxFit.cover,
+                                          ))
+                                      : SvgPicture.asset(
+                                          "assets/images/profile-circle.svg",
+                                          width: width(68),
+                                          height: height(68),
+                                          fit: BoxFit.cover,
+                                        ),
+                                  SizedBox(
+                                    width: width(16),
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(
+                                              child: CustomText(
+                                                  text:
+                                                      "${logInModel.firstName} ${logInModel.lastName}",
+                                                  fontsize: 14.sp,
+                                                  height: 1.2,
+                                                  maxLines: 2,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: kSecondaryColor),
+                                            ),
+                                            Flexible(
+                                              child: CustomText(
+                                                text:
+                                                    "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
+                                                fontsize: 12.sp,
+                                                color: kPrimaryColor,
+                                                height: 1.2,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: height(10),
+                                        ),
+                                        if (logInModel.category == "Teacher")
+                                          CustomText(
+                                              text:
+                                                  "${logInModel.teachIn} Teacher",
+                                              fontsize: 14.sp,
+                                              maxLines: 2,
+                                              height: 1,
+                                              color: kPrimaryColor),
+                                        if (logInModel.category == "Driver")
+                                          CustomText(
+                                              text: logInModel.careType,
+                                              fontsize: 14.sp,
+                                              height: 1,
+                                              color: kHintTextColor),
+                                        if (logInModel.category ==
+                                            "Baby Sitter")
+                                          CustomText(
+                                              text: logInModel.degree,
+                                              fontsize: 14.sp,
+                                              height: 1,
+                                              color: kHintTextColor),
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                          SizedBox(
+                            height: height(16),
+                          ),
+                          IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/icons/exp.png",
+                                  width: width(16),
+                                  height: height(16),
+                                ),
+                                CustomText(
+                                    text:
+                                        "  ${logInModel.experience} experience",
+                                    fontsize: 12.sp,
+                                    color: kHintTextColor),
+                                SizedBox(
+                                  width: width(30),
+                                ),
+                                VerticalDivider(
+                                  thickness: 1,
+                                ),
+                                SizedBox(
+                                  width: width(30),
+                                ),
+                                SvgPicture.asset(
+                                  "assets/icons/location.svg",
+                                  width: width(14),
+                                  height: height(13),
+                                ),
+                                CustomText(
+                                    text: "  ${logInModel.country}",
+                                    fontsize: 12.sp,
+                                    color: kHintTextColor),
+                                SizedBox(
+                                  width: width(30),
+                                ),
+                                VerticalDivider(
+                                  thickness: 1,
+                                ),
+                                SizedBox(
+                                  width: width(30),
+                                ),
+                                SvgPicture.asset(
+                                  "assets/icons/rating.svg",
+                                  width: width(14),
+                                  height: height(13),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            CustomRatingDialog(
+                                                logInModel: logInModel));
+                                  },
+                                  child: CustomText(
+                                      text: " $rating",
+                                      fontsize: 12.sp,
+                                      color: kHintTextColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: height(40),
+                          ),
+                          CustomText(
+                              text: "About ${logInModel.category}",
+                              fontsize: 14.sp,
+                              color: kSecondaryColor),
+                          SizedBox(
+                            height: height(10),
+                          ),
+                          CustomText(
+                              text: "${logInModel.aboutYou}",
+                              fontsize: 12.sp,
+                              maxLines: 10,
+                              color: kHintTextColor),
+                          if (logInModel.category == "Teacher")
+                            TeacherDetailsWidget(
+                              logInModel: logInModel,
+                            ),
+                          if (logInModel.category == "Driver")
+                            DriverDetailsWidget(
+                              logInModel: logInModel,
+                            ),
+                          if (logInModel.category == "Baby Sitter")
+                            BabySitterDetailsWidget(
+                              logInModel: logInModel,
+                            ),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: height(100),
+                  ),
                 ],
               ),
-              Spacer(),
-              Expanded(
-                child: CustomText(
-                  textOverflow: TextOverflow.ellipsis,
-                  text:
-                      "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
-                  fontsize: 12.sp,
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold,
+            ),
+          ),
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              width: double.infinity,
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: width(16),
+                  vertical: height(16),
                 ),
-              ),
-            ]),
-            SizedBox(
-              height: height(16),
-            ),
-            IntrinsicHeight(
-              child: Row(
-                children: [
-                  Image.asset(
-                    "assets/icons/exp.png",
-                    width: width(16),
-                    height: height(16),
-                  ),
-                  CustomText(
-                      text: "  ${logInModel.experience} experience",
-                      fontsize: 12.sp,
-                      color: kHintTextColor),
-                  SizedBox(
-                    width: width(30),
-                  ),
-                  VerticalDivider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    width: width(30),
-                  ),
-                  SvgPicture.asset(
-                    "assets/icons/location.svg",
-                    width: width(14),
-                    height: height(13),
-                  ),
-                  CustomText(
-                      text: "  ${logInModel.country}",
-                      fontsize: 12.sp,
-                      color: kHintTextColor),
-                  SizedBox(
-                    width: width(30),
-                  ),
-                  VerticalDivider(
-                    thickness: 1,
-                  ),
-                  SizedBox(
-                    width: width(30),
-                  ),
-                  SvgPicture.asset(
-                    "assets/icons/rating.svg",
-                    width: width(14),
-                    height: height(13),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) =>
-                              CustomRatingDialog(logInModel: logInModel));
+                child: CustomButton(
+                    isUpperCase: true,
+                    function: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ChatDetailsView(logInModel: logInModel)))
+                          .then((value) =>
+                              ClientCubit.get(context).changeBottomNav(1));
                     },
-                    child: CustomText(
-                        text: " $rating",
-                        fontsize: 12.sp,
-                        color: kHintTextColor),
-                  ),
-                ],
+                    text: LocaleKeys.sendMessage.tr()),
               ),
             ),
-            SizedBox(
-              height: height(40),
-            ),
-            CustomText(
-                text: "About ${logInModel.category}",
-                fontsize: 14.sp,
-                color: kSecondaryColor),
-            SizedBox(
-              height: height(10),
-            ),
-            CustomText(
-                text: "${logInModel.aboutYou}",
-                fontsize: 12.sp,
-                color: kHintTextColor),
-            if (logInModel.category == "Teacher")
-              TeacherDetailsWidget(
-                logInModel: logInModel,
-                onPressed: () {
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatDetailsView(logInModel: logInModel)))
-                      .then((value) {
-                    cubit.updateMessagesStatus(
-                      receiverId: logInModel.uid!,
-                    );
-                  });
-                },
-              ),
-            if (logInModel.category == "Driver")
-              DriverDetailsWidget(
-                logInModel: logInModel,
-                onPressed: () {
-                  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatDetailsView(logInModel: logInModel)))
-                      .then((value) {
-                    cubit.updateMessagesStatus(
-                      receiverId: logInModel.uid!,
-                    );
-                  });
-                },
-              ),
-            if (logInModel.category == "Baby Sitter")
-              BabySitterDetailsWidget(
-                  logInModel: logInModel,
-                  onPressed: () {
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ChatDetailsView(logInModel: logInModel)))
-                        .then((value) {
-                      cubit.updateMessagesStatus(
-                        receiverId: logInModel.uid!,
-                      );
-                    });
-                  }),
-          ]),
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -221,9 +258,10 @@ class PartnerDetailsView extends StatelessWidget {
 
 class DriverDetailsWidget extends StatelessWidget {
   final LogInModel logInModel;
-  final Function()? onPressed;
 
-  DriverDetailsWidget({required this.logInModel, required this.onPressed});
+  DriverDetailsWidget({
+    required this.logInModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -351,11 +389,6 @@ class DriverDetailsWidget extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: height(25),
-        ),
-        CustomButton(
-            isUpperCase: true, function: onPressed, text: "Send Message"),
       ],
     );
   }
@@ -395,8 +428,9 @@ class SkillsWidget extends StatelessWidget {
 
 class TeacherDetailsWidget extends StatelessWidget {
   final LogInModel logInModel;
-  final Function()? onPressed;
-  TeacherDetailsWidget({required this.logInModel, required this.onPressed});
+  TeacherDetailsWidget({
+    required this.logInModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -519,11 +553,6 @@ class TeacherDetailsWidget extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(
-          height: height(60),
-        ),
-        CustomButton(
-            isUpperCase: true, function: onPressed, text: "Send Message"),
       ],
     );
   }
@@ -531,8 +560,9 @@ class TeacherDetailsWidget extends StatelessWidget {
 
 class BabySitterDetailsWidget extends StatelessWidget {
   final LogInModel logInModel;
-  final Function()? onPressed;
-  BabySitterDetailsWidget({required this.logInModel, required this.onPressed});
+  BabySitterDetailsWidget({
+    required this.logInModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -659,11 +689,6 @@ class BabySitterDetailsWidget extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: height(180),
-            ),
-            CustomButton(
-                isUpperCase: true, function: onPressed, text: "Send Message"),
           ],
         ),
       ],

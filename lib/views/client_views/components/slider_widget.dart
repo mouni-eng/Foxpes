@@ -1,19 +1,49 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/slider_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/widgets/custom_text.dart';
 
 class SliderWidget extends StatelessWidget {
   final CarouselController _controller = CarouselController();
   final int currentIndex;
   final dynamic Function(int, CarouselPageChangedReason)? onChanged;
-  SliderWidget({required this.currentIndex, required this.onChanged});
+  SliderWidget({
+    required this.currentIndex,
+    required this.onChanged,
+  });
   @override
   Widget build(BuildContext context) {
+    List<SliderModel> sliderList = [
+      SliderModel(
+        title: "${LocaleKeys.findYour.tr()}\n${LocaleKeys.teacher.tr()}",
+        subTitle: "${LocaleKeys.findYour.tr()}\n${LocaleKeys.subjectsyou.tr()}",
+        image: "assets/images/slider-1.svg",
+        top: -18,
+        left: 90,
+      ),
+      SliderModel(
+        title: "${LocaleKeys.findYour.tr()}\n${LocaleKeys.driver.tr()}",
+        subTitle:
+            "${LocaleKeys.findaProfessional.tr()}\n${LocaleKeys.drivertodrive.tr()}\n${LocaleKeys.places.tr()}",
+        image: "assets/images/slider-2.svg",
+        top: -25,
+        left: 80,
+      ),
+      SliderModel(
+        title: "${LocaleKeys.findYour.tr()}\n${LocaleKeys.babySitter.tr()}",
+        subTitle:
+            "${LocaleKeys.findasuittablesitter.tr()}\n${LocaleKeys.takecareofyourchild.tr()}",
+        image: "assets/images/slider-3.svg",
+        top: -28,
+        left: 200,
+      ),
+    ];
     return Column(
       children: [
         CarouselSlider(
@@ -77,6 +107,8 @@ class SliderData extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    Locale locale = Localizations.localeOf(context);
+    print(locale);
     return Container(
       height: height(165),
       child: Stack(
@@ -101,29 +133,45 @@ class SliderData extends StatelessWidget {
                   CustomText(
                     text: sliderModel.title,
                     fontsize: 17.sp,
-                    height: height(1.6),
+                    height: 1.1,
                     color: kSecondaryColor,
                     fontWeight: FontWeight.bold,
+                  ),
+                  SizedBox(
+                    height: height(8),
                   ),
                   CustomText(
                       text: sliderModel.subTitle,
                       fontsize: 10.sp,
-                      height: height(1.6),
+                      maxLines: 3,
+                      height: 1.1,
                       color: kHintTextColor),
                 ],
               ),
             ),
           ),
-          Positioned(
-            top: height(sliderModel.top),
-            left: width(sliderModel.left),
-            child: SvgPicture.asset(
-              sliderModel.image,
-              width: width(210),
-              height: height(210),
-              fit: BoxFit.fill,
+          if (locale.toString() == "en")
+            Positioned(
+              top: height(sliderModel.top),
+              left: width(sliderModel.left),
+              child: SvgPicture.asset(
+                sliderModel.image,
+                width: width(210),
+                height: height(210),
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
+          if (locale.toString() == "ar")
+            Positioned(
+              top: height(sliderModel.top),
+              right: width(sliderModel.left),
+              child: SvgPicture.asset(
+                sliderModel.image,
+                width: width(210),
+                height: height(210),
+                fit: BoxFit.fill,
+              ),
+            ),
         ],
       ),
     );

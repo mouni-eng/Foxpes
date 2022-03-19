@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/otp_verfication_view.dart';
@@ -28,6 +30,34 @@ class BabySitterSignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _formKey = GlobalKey<FormState>();
+        List<String> durationTr = [
+    LocaleKeys.perHour.tr(),
+    LocaleKeys.perDay.tr(),
+    LocaleKeys.perWeek.tr(),
+    LocaleKeys.perMonth.tr(),
+];
+List<String> statusTr = [
+  LocaleKeys.single.tr(),
+  LocaleKeys.taken.tr(),
+];
+List<String> educationTr = [
+  LocaleKeys.bachelorDegree.tr(),
+  LocaleKeys.highSchool.tr(),
+  LocaleKeys.notEducated.tr(),
+];
+List<String> experienceTr = [
+  "2 ${LocaleKeys.years.tr()}",
+  "4 ${LocaleKeys.years.tr()}",
+  "6 ${LocaleKeys.years.tr()}",
+  "8 ${LocaleKeys.years.tr()}",
+  "10 ${LocaleKeys.years.tr()}",
+  "+10 ${LocaleKeys.years.tr()}",
+];
+List<String> religionTr = [
+  LocaleKeys.muslim.tr(),
+  LocaleKeys.cristian.tr(),
+  LocaleKeys.other.tr(),
+];
     return Scaffold(
       appBar: AppBar(),
       body: BlocConsumer<AuthCubit, AuthStates>(
@@ -51,23 +81,30 @@ class BabySitterSignUpView extends StatelessWidget {
                           cubit.choosebirthDate(value!);
                           print(cubit.birthDate);
                         },
+                        validate: (value) {
+                            if (value!.isEmpty) {
+                              return "";
+                            } else {
+                              return null;
+                            }
+                          },
                       ),
                       SizedBox(
                         height: height(24),
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "2 years",
+                          hint: "2 ${LocaleKeys.years}",
                           dropItems: List.generate(experience.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                experience[index],
+                                experienceTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: experience[index],
                             );
                           }),
-                          label: "Experience",
+                          label: LocaleKeys.experience.tr(),
                           onChange: (value) {
                             cubit.chooseExperience(value!);
                           },
@@ -93,7 +130,7 @@ class BabySitterSignUpView extends StatelessWidget {
                               value: countries[index].name!,
                             );
                           }),
-                          label: "Country",
+                          label: LocaleKeys.country.tr(),
                           onChange: (value) {
                             cubit.chooseCountry(value!);
                           },
@@ -109,17 +146,17 @@ class BabySitterSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "Muslim",
+                          hint: religionTr[0],
                           dropItems: List.generate(religion.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                religion[index],
+                                religionTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: religion[index],
                             );
                           }),
-                          label: "Religion",
+                          label: LocaleKeys.religion.tr(),
                           onChange: (value) {
                             cubit.choosereligion(value!);
                             
@@ -136,17 +173,17 @@ class BabySitterSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "Single",
+                          hint: statusTr[0],
                           dropItems: List.generate(status.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                status[index],
+                                statusTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: status[index],
                             );
                           }),
-                          label: "Status",
+                          label: LocaleKeys.status.tr(),
                           onChange: (value) {
                             cubit.choosestatus(value!);
                           },
@@ -162,17 +199,17 @@ class BabySitterSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "Bachelor's Degree",
+                          hint: educationTr[0],
                           dropItems: List.generate(education.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                education[index],
+                                educationTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: education[index],
                             );
                           }),
-                          label: "Degree",
+                          label: LocaleKeys.education.tr(),
                           onChange: (value) {
                             cubit.choosedegree(value!);
                           },
@@ -198,7 +235,7 @@ class BabySitterSignUpView extends StatelessWidget {
                               value: language[index],
                             );
                           }),
-                          label: "Language",
+                          label: LocaleKeys.language.tr(),
                           onChange: (value) {
                             cubit.choosespeak(value!);
                           },
@@ -226,7 +263,7 @@ class BabySitterSignUpView extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: "Price",
+                            label: LocaleKeys.price.tr(),
                             hintText: "300 KWD",
                           )),
                           SizedBox(
@@ -239,19 +276,21 @@ class BabySitterSignUpView extends StatelessWidget {
                                 duration.length,
                                 (index) => DropdownMenuItem<String>(
                                       child: Text(
-                                        duration[index],
-                                        style: Theme.of(context).textTheme.bodyText2,
+                                        durationTr[index],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
                                       ),
                                       value: duration[index],
                                     )),
                             validate: (value) {
-                              if (value!.isEmpty) {
+                              if (value == null) {
                                 return "";
                               }
                               return null;
                             },
-                            label: "Duration",
-                            hint: "Per Month",
+                            label: LocaleKeys.duration.tr(),
+                            hint: LocaleKeys.perHour.tr(),
                             onChange: (value) {
                               cubit.chooseduration(value!);
                             },
@@ -273,8 +312,8 @@ class BabySitterSignUpView extends StatelessWidget {
                           }
                           return null;
                         },
-                        label: "About You",
-                        hintText: "Write something about you..",
+                        label: LocaleKeys.aboutYou.tr(),
+                        hintText: LocaleKeys.writeSomething.tr(),
                       ),
                       SizedBox(
                         height: height(24),
@@ -305,7 +344,7 @@ class BabySitterSignUpView extends StatelessWidget {
                                     aboutYou: _aboutMeController.text,
                                   )));
                             }
-                          }, text: "Confirm"),
+                          }, text: LocaleKeys.confirm.tr()),
                       SizedBox(
                         height: height(16),
                       ),

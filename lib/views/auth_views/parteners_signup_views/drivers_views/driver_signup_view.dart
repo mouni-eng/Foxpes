@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/parteners_signup_views/drivers_views/driver_uploadphotos_view.dart';
@@ -12,7 +14,6 @@ import 'package:movies_app/widgets/custom_dropdown.dart';
 import 'package:movies_app/widgets/custom_textformfield.dart';
 
 class DriverSignUpView extends StatelessWidget {
-  final GlobalKey _formKey = GlobalKey<FormState>();
   final TextEditingController _carNumberController = TextEditingController();
   final String firstName;
   final String lastName;
@@ -35,6 +36,21 @@ class DriverSignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _formKey = GlobalKey<FormState>();
+    List<String> durationTr = [
+      LocaleKeys.perHour.tr(),
+      LocaleKeys.perDay.tr(),
+      LocaleKeys.perWeek.tr(),
+      LocaleKeys.perMonth.tr(),
+    ];
+    List<String> experienceTr = [
+      "2 ${LocaleKeys.years.tr()}",
+      "4 ${LocaleKeys.years.tr()}",
+      "6 ${LocaleKeys.years.tr()}",
+      "8 ${LocaleKeys.years.tr()}",
+      "10 ${LocaleKeys.years.tr()}",
+      "+10 ${LocaleKeys.years.tr()}",
+    ];
     return Scaffold(
       appBar: AppBar(),
       body: BlocConsumer<AuthCubit, AuthStates>(
@@ -58,23 +74,30 @@ class DriverSignUpView extends StatelessWidget {
                           cubit.choosebirthDate(value!);
                           print(cubit.birthDate);
                         },
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return "";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                       SizedBox(
                         height: height(24),
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "2 years",
+                          hint: "2 ${LocaleKeys.years}",
                           dropItems: List.generate(experience.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                experience[index],
+                                experienceTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: experience[index],
                             );
                           }),
-                          label: "Experience",
+                          label: LocaleKeys.experience.tr(),
                           onChange: (value) {
                             cubit.chooseExperience(value!);
                           },
@@ -100,7 +123,7 @@ class DriverSignUpView extends StatelessWidget {
                               value: countries[index].name!,
                             );
                           }),
-                          label: "Country",
+                          label: LocaleKeys.country.tr(),
                           onChange: (value) {
                             cubit.chooseCountry(value!);
                           },
@@ -126,7 +149,7 @@ class DriverSignUpView extends StatelessWidget {
                               value: cars[index],
                             );
                           }),
-                          label: "Car Type",
+                          label: LocaleKeys.carType.tr(),
                           onChange: (value) {
                             cubit.chooseCarType(value!);
                           },
@@ -150,7 +173,7 @@ class DriverSignUpView extends StatelessWidget {
                           }
                           return null;
                         },
-                        label: "Car Number",
+                        label: LocaleKeys.carNumber.tr(),
                         hintText: "90-24578",
                       ),
                       SizedBox(
@@ -170,7 +193,7 @@ class DriverSignUpView extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: "Price",
+                            label: LocaleKeys.price.tr(),
                             hintText: "300 KWD",
                           )),
                           SizedBox(
@@ -183,7 +206,7 @@ class DriverSignUpView extends StatelessWidget {
                                 duration.length,
                                 (index) => DropdownMenuItem<String>(
                                       child: Text(
-                                        duration[index],
+                                        durationTr[index],
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
@@ -191,13 +214,13 @@ class DriverSignUpView extends StatelessWidget {
                                       value: duration[index],
                                     )),
                             validate: (value) {
-                              if (value!.isEmpty) {
+                              if (value == null) {
                                 return "";
                               }
                               return null;
                             },
-                            label: "Duration",
-                            hint: "Per Month",
+                            label: LocaleKeys.duration.tr(),
+                            hint: LocaleKeys.perHour.tr(),
                             onChange: (value) {
                               cubit.chooseduration(value!);
                             },
@@ -219,8 +242,8 @@ class DriverSignUpView extends StatelessWidget {
                           }
                           return null;
                         },
-                        label: "About You",
-                        hintText: "Write something about you..",
+                        label: LocaleKeys.aboutYou.tr(),
+                        hintText: LocaleKeys.writeSomething.tr(),
                       ),
                       SizedBox(
                         height: height(24),
@@ -228,27 +251,29 @@ class DriverSignUpView extends StatelessWidget {
                       CustomButton(
                           isUpperCase: true,
                           function: () {
-                            navigateTo(
-                                context,
-                                DriverUploadPhotosView(
-                                  firstName: firstName,
-                                  lastName: lastName,
-                                  email: email,
-                                  password: password,
-                                  phone: phone,
-                                  gender: gender,
-                                  category: category,
-                                  birthDate: cubit.birthDate!,
-                                  country: cubit.country!,
-                                  experience: cubit.experience!,
-                                  carType: cubit.carType!,
-                                  carNumber: _carNumberController.text,
-                                  price: _priceController.text,
-                                  duration: cubit.duration!,
-                                  aboutYou: _aboutMeController.text,
-                                ));
+                            if (_formKey.currentState!.validate()) {
+                              navigateTo(
+                                  context,
+                                  DriverUploadPhotosView(
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    email: email,
+                                    password: password,
+                                    phone: phone,
+                                    gender: gender,
+                                    category: category,
+                                    birthDate: cubit.birthDate!,
+                                    country: cubit.country!,
+                                    experience: cubit.experience!,
+                                    carType: cubit.carType!,
+                                    carNumber: _carNumberController.text,
+                                    price: _priceController.text,
+                                    duration: cubit.duration!,
+                                    aboutYou: _aboutMeController.text,
+                                  ));
+                            }
                           },
-                          text: "Confirm"),
+                          text: LocaleKeys.confirm.tr()),
                       SizedBox(
                         height: height(16),
                       ),

@@ -1,13 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
-import 'package:movies_app/main.dart';
-import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/view_models/Client_cubit/states.dart';
 import 'package:movies_app/views/client_views/profile_view.dart';
@@ -15,6 +14,7 @@ import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:movies_app/widgets/custom_profile_widget.dart';
 import 'package:movies_app/widgets/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientSettingsView extends StatelessWidget {
   @override
@@ -52,32 +52,36 @@ class ClientSettingsView extends StatelessWidget {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CustomText(
                               text:
                                   "${cubit.logInModel!.firstName} ${cubit.logInModel!.lastName}",
                               fontsize: 15.sp,
-                              height: height(1.4),
+                              height: 1.2,
                               color: kSecondaryColor,
                               fontWeight: FontWeight.w500,
+                            ),
+                            SizedBox(
+                              height: height(3),
                             ),
                             CustomText(
                                 text: cubit.logInModel!.email,
                                 fontsize: 11.sp,
-                                height: height(1.6),
+                                height: 1,
                                 color: kPrimaryColor),
                           ],
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: height(22),
+                      height: height(25),
                     ),
                     Divider(
                       thickness: 0.5,
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(25),
                     ),
                     Row(
                       children: [
@@ -90,11 +94,13 @@ class ClientSettingsView extends StatelessWidget {
                           width: width(28),
                         ),
                         CustomText(
-                            text: "Profile",
+                            text: LocaleKeys.profile.tr(),
                             fontsize: 14.sp,
                             color: kSecondaryColor),
                         Spacer(),
                         IconButton(
+                          constraints: BoxConstraints(),
+                          padding: EdgeInsets.zero,
                           onPressed: () {
                             navigateTo(context, ClientProfileView());
                           },
@@ -107,7 +113,7 @@ class ClientSettingsView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(25),
                     ),
                     Row(
                       children: [
@@ -120,12 +126,16 @@ class ClientSettingsView extends StatelessWidget {
                           width: width(28),
                         ),
                         CustomText(
-                            text: "Privacy",
+                            text: LocaleKeys.privacy.tr(),
                             fontsize: 14.sp,
                             color: kSecondaryColor),
                         Spacer(),
                         IconButton(
-                          onPressed: () {},
+                          constraints: BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            launchURL("http://foxpes.com/#/");
+                          },
                           icon: SvgPicture.asset(
                             "assets/icons/arrow-left.svg",
                             width: width(24),
@@ -135,7 +145,7 @@ class ClientSettingsView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(25),
                     ),
                     Row(
                       children: [
@@ -148,12 +158,16 @@ class ClientSettingsView extends StatelessWidget {
                           width: width(28),
                         ),
                         CustomText(
-                            text: "Support",
+                            text: LocaleKeys.support.tr(),
                             fontsize: 14.sp,
                             color: kSecondaryColor),
                         Spacer(),
                         IconButton(
-                          onPressed: () {},
+                          constraints: BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            launchURL("http://foxpes.com/#/");
+                          },
                           icon: SvgPicture.asset(
                             "assets/icons/arrow-left.svg",
                             width: width(24),
@@ -163,7 +177,7 @@ class ClientSettingsView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(25),
                     ),
                     Row(
                       children: [
@@ -176,12 +190,16 @@ class ClientSettingsView extends StatelessWidget {
                           width: width(28),
                         ),
                         CustomText(
-                            text: "About Us",
+                            text: LocaleKeys.aboutUs.tr(),
                             fontsize: 14.sp,
                             color: kSecondaryColor),
                         Spacer(),
                         IconButton(
-                          onPressed: () {},
+                          constraints: BoxConstraints(),
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            launchURL("http://foxpes.com/#/");
+                          },
                           icon: SvgPicture.asset(
                             "assets/icons/arrow-left.svg",
                             width: width(24),
@@ -191,13 +209,13 @@ class ClientSettingsView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(15),
                     ),
                     Divider(
                       thickness: 0.5,
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(15),
                     ),
                     if (cubit.logInModel!.category == "Student")
                       Row(
@@ -211,22 +229,26 @@ class ClientSettingsView extends StatelessWidget {
                             width: width(28),
                           ),
                           CustomText(
-                              text: "Notifications",
+                              text: LocaleKeys.notifications.tr(),
                               fontsize: 14.sp,
                               color: kSecondaryColor),
                           Spacer(),
-                          Switch(
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                              value: cubit.notificationValue,
-                              activeColor: kPrimaryColor,
-                              onChanged: (value) {
-                                cubit.changeNotificationValue(value);
-                              })
+                          SizedBox(
+                            width: width(40),
+                            height: height(22),
+                            child: Switch(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                value: cubit.notificationValue,
+                                activeColor: kPrimaryColor,
+                                onChanged: (value) {
+                                  cubit.changeNotificationValue(value);
+                                }),
+                          )
                         ],
                       ),
                     SizedBox(
-                      height: height(5),
+                      height: height(15),
                     ),
                     Row(
                       children: [
@@ -239,20 +261,17 @@ class ClientSettingsView extends StatelessWidget {
                           width: width(28),
                         ),
                         CustomText(
-                            text: "Language",
+                            text: LocaleKeys.language.tr(),
                             fontsize: 14.sp,
                             color: kSecondaryColor),
                         Spacer(),
-                        TextButton(
-                            onPressed: () {
+                        InkWell(
+                            onTap: () {
                               showDialog(
                                   barrierColor: Colors.black.withOpacity(0.8),
                                   context: context,
                                   builder: (context) => ChangeLanguageWidget());
                             },
-                            style: TextButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
                             child: CustomText(
                                 text: "English",
                                 fontsize: 12.sp,
@@ -260,7 +279,7 @@ class ClientSettingsView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: height(5),
+                      height: height(15),
                     ),
                     if (cubit.logInModel!.country != null)
                       Row(
@@ -274,19 +293,14 @@ class ClientSettingsView extends StatelessWidget {
                             width: width(28),
                           ),
                           CustomText(
-                              text: "Country",
+                              text: LocaleKeys.country.tr(),
                               fontsize: 14.sp,
                               color: kSecondaryColor),
                           Spacer(),
-                          TextButton(
-                              onPressed: () {},
-                              style: TextButton.styleFrom(
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              child: CustomText(
-                                  text: cubit.logInModel!.country,
-                                  fontsize: 12.sp,
-                                  color: kPrimaryColor)),
+                          CustomText(
+                              text: cubit.logInModel!.country,
+                              fontsize: 12.sp,
+                              color: kPrimaryColor),
                         ],
                       ),
                     SizedBox(
@@ -316,13 +330,13 @@ class ClientSettingsView extends StatelessWidget {
                             width: width(28),
                           ),
                           CustomText(
-                              text: "LogOut",
+                              text: LocaleKeys.logOut.tr(),
                               fontsize: 14.sp,
                               color: kSecondaryColor),
                         ],
                       ),
                     ),
-                    if (cubit.logInModel!.category != "Student")
+                    /*if (cubit.logInModel!.category != "Student")
                       GestureDetector(
                         onTap: () {},
                         child: Column(
@@ -349,7 +363,7 @@ class ClientSettingsView extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
                     SizedBox(
                       height: height(15),
                     ),
@@ -362,5 +376,13 @@ class ClientSettingsView extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url, forceWebView: false);
+  } else {
+    throw 'Could not launch $url';
   }
 }

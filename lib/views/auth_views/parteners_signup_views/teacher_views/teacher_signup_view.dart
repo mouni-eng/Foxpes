@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/otp_verfication_view.dart';
@@ -35,6 +37,67 @@ class TeacherSignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _formKey = GlobalKey<FormState>();
+    List<String> durationTr = [
+      LocaleKeys.perHour.tr(),
+      LocaleKeys.perDay.tr(),
+      LocaleKeys.perWeek.tr(),
+      LocaleKeys.perMonth.tr(),
+    ];
+    List<String> experienceTr = [
+      "2 ${LocaleKeys.years.tr()}",
+      "4 ${LocaleKeys.years.tr()}",
+      "6 ${LocaleKeys.years.tr()}",
+      "8 ${LocaleKeys.years.tr()}",
+      "10 ${LocaleKeys.years.tr()}",
+      "+10 ${LocaleKeys.years.tr()}",
+    ];
+    List<String> skillsTr = [
+      LocaleKeys.grammer.tr(),
+      LocaleKeys.speaking.tr(),
+      LocaleKeys.listening.tr(),
+    ];
+    List<String> facultiesTr = [
+      LocaleKeys.computerScience.tr(),
+      LocaleKeys.engineering.tr(),
+      LocaleKeys.law.tr(),
+      LocaleKeys.art.tr(),
+      LocaleKeys.buissniss.tr(),
+      LocaleKeys.pharmacy.tr(),
+      LocaleKeys.medecine.tr(),
+      LocaleKeys.dentistry.tr(),
+      LocaleKeys.other.tr(),
+    ];
+    List<String> subjectsTr = [
+      LocaleKeys.arabic.tr(),
+      LocaleKeys.art.tr(),
+      LocaleKeys.biology.tr(),
+      LocaleKeys.chemistry.tr(),
+      LocaleKeys.english.tr(),
+      LocaleKeys.french.tr(),
+      LocaleKeys.general.tr(),
+      LocaleKeys.geology.tr(),
+      LocaleKeys.german.tr(),
+      LocaleKeys.history.tr(),
+      LocaleKeys.italian.tr(),
+      LocaleKeys.math.tr(),
+      LocaleKeys.philosophy.tr(),
+      LocaleKeys.physics.tr(),
+      LocaleKeys.programming.tr(),
+      LocaleKeys.quran.tr(),
+      LocaleKeys.religion.tr(),
+      LocaleKeys.science.tr(),
+      LocaleKeys.spanish.tr(),
+      LocaleKeys.socialStudies.tr(),
+      LocaleKeys.descriptiveSignLanguage.tr(),
+      LocaleKeys.speech_and_language_therapy.tr(),
+      LocaleKeys.turkey.tr(),
+      LocaleKeys.economics.tr(),
+      LocaleKeys.accounting.tr(),
+      LocaleKeys.engineering.tr(),
+      LocaleKeys.law.tr(),
+      LocaleKeys.statistics.tr(),
+      LocaleKeys.geoghraphy.tr(),
+    ];
     return Scaffold(
       appBar: AppBar(),
       body: BlocConsumer<AuthCubit, AuthStates>(
@@ -58,23 +121,30 @@ class TeacherSignUpView extends StatelessWidget {
                           cubit.choosebirthDate(value!);
                           print(cubit.birthDate);
                         },
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return "";
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                       SizedBox(
                         height: height(24),
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "2 years",
+                          hint: "2 ${LocaleKeys.years.tr()}",
                           dropItems: List.generate(experience.length, (index) {
                             return DropdownMenuItem<String>(
                               child: Text(
-                                experience[index],
+                                experienceTr[index],
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: experience[index],
                             );
                           }),
-                          label: "Experience",
+                          label: LocaleKeys.experience.tr(),
                           onChange: (value) {
                             cubit.chooseExperience(value!);
                           },
@@ -100,7 +170,7 @@ class TeacherSignUpView extends StatelessWidget {
                               value: countries[index].name!,
                             );
                           }),
-                          label: "Country",
+                          label: LocaleKeys.country.tr(),
                           onChange: (value) {
                             cubit.chooseCountry(value!);
                           },
@@ -116,18 +186,18 @@ class TeacherSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "grammar, speaking, listening",
+                          hint: LocaleKeys.grammar_speaking_listening.tr(),
                           dropItems: List.generate(
                               skills.length,
                               (index) => DropdownMenuItem<String>(
                                     child: Text(
-                                      skills[index],
+                                      skillsTr[index],
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
                                     value: skills[index],
                                   )),
-                          label: "Skills",
+                          label: LocaleKeys.skills.tr(),
                           onChange: (value) {
                             cubit.chooseskills(value!);
                           },
@@ -143,18 +213,18 @@ class TeacherSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "computer science",
+                          hint: LocaleKeys.computerScience.tr(),
                           dropItems: List.generate(
                               faculties.length,
                               (index) => DropdownMenuItem<String>(
                                     child: Text(
-                                      faculties[index],
+                                      facultiesTr[index],
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
                                     value: faculties[index],
                                   )),
-                          label: "Faculty",
+                          label: LocaleKeys.faculty.tr(),
                           onChange: (value) {
                             cubit.choosefaculty(value!);
                           },
@@ -170,18 +240,18 @@ class TeacherSignUpView extends StatelessWidget {
                       ),
                       CustomDropDownBox(
                           context: context,
-                          hint: "English",
+                          hint: subjectsTr[0],
                           dropItems: List.generate(
                               subjects.length,
                               (index) => DropdownMenuItem<String>(
                                     child: Text(
-                                      subjects[index],
+                                      subjectsTr[index],
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
                                     value: subjects[index],
                                   )),
-                          label: "Teach In",
+                          label: LocaleKeys.teachIn.tr(),
                           onChange: (value) {
                             cubit.choosesubject(value!);
                           },
@@ -209,7 +279,7 @@ class TeacherSignUpView extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: "Price",
+                            label: LocaleKeys.price.tr(),
                             hintText: "300 KWD",
                           )),
                           SizedBox(
@@ -222,7 +292,7 @@ class TeacherSignUpView extends StatelessWidget {
                                 duration.length,
                                 (index) => DropdownMenuItem<String>(
                                       child: Text(
-                                        duration[index],
+                                        durationTr[index],
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
@@ -235,8 +305,8 @@ class TeacherSignUpView extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: "Duration",
-                            hint: "Per Month",
+                            label: LocaleKeys.duration.tr(),
+                            hint: LocaleKeys.perHour.tr(),
                             onChange: (value) {
                               cubit.chooseduration(value!);
                             },
@@ -258,8 +328,8 @@ class TeacherSignUpView extends StatelessWidget {
                           }
                           return null;
                         },
-                        label: "About You",
-                        hintText: "Write something about you..",
+                        label: LocaleKeys.aboutYou.tr(),
+                        hintText: LocaleKeys.writeSomething.tr(),
                       ),
                       SizedBox(
                         height: height(24),
@@ -291,7 +361,7 @@ class TeacherSignUpView extends StatelessWidget {
                                   )));
                             }
                           },
-                          text: "Confirm"),
+                          text: LocaleKeys.confirm.tr()),
                       SizedBox(
                         height: height(16),
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomText extends StatelessWidget {
   final String? text;
   final double? height;
+  final int? maxLines;
   final double? fontsize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
@@ -16,12 +17,13 @@ class CustomText extends StatelessWidget {
       this.textOverflow = TextOverflow.ellipsis,
       this.fontWeight,
       this.textAlign,
+      this.maxLines = 2,
       required this.color});
   @override
   Widget build(BuildContext context) {
     return Text(
       text!,
-      maxLines: 2,
+      maxLines: maxLines,
       overflow: textOverflow,
       textAlign: textAlign,
       style: TextStyle(

@@ -1,10 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/views/auth_views/otp_verfication_view.dart';
@@ -94,7 +96,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                 children: [
                   cubit.idCard == null
                       ? CustomUploadPhotosCard(
-                          title: "Upload your id card",
+                          title: LocaleKeys.uploadIdCard.tr(),
                           onPressed: () {
                             cubit.chooseImagre(key: "idCard");
                           },
@@ -118,7 +120,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                   ),
                   cubit.cardLiscense == null
                       ? CustomUploadPhotosCard(
-                          title: "Upload your card license",
+                          title: LocaleKeys.uploadYourCardLicense.tr(),
                           onPressed: () {
                             cubit.chooseImagre(key: "cardLiscense");
                           },
@@ -142,7 +144,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                   ),
                   cubit.carPlate == null
                       ? CustomUploadPhotosCard(
-                          title: "Upload Car Plate",
+                          title: LocaleKeys.uploadCarPlate.tr(),
                           onPressed: () {
                             cubit.chooseImagre(key: "carPlate");
                           },
@@ -165,7 +167,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                     height: height(24),
                   ),
                   Text(
-                    "Upload minimum 2 pictures of your car",
+                    LocaleKeys.uploadMinimum2PicturesOfYourCar.tr(),
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
                   SizedBox(
@@ -198,7 +200,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                                   height: height(8),
                                 ),
                                 CustomText(
-                                  text: "Add Photo",
+                                  text: LocaleKeys.addPhoto.tr(),
                                   fontsize: 9.sp,
                                   color: kPrimaryColor,
                                 ),
@@ -249,7 +251,7 @@ class DriverUploadPhotosView extends StatelessWidget {
                           cubit.uploadFile();
                         }
                       },
-                      text: "Confirm",
+                      text: LocaleKeys.confirm.tr(),
                     ),
                     fallback: (context) =>
                         Center(child: CircularProgressIndicator.adaptive()),

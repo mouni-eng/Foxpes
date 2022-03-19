@@ -1,7 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/size_config.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:movies_app/widgets/custom_button.dart';
@@ -16,7 +18,7 @@ class ForgotPasswordView extends StatelessWidget {
     TextEditingController _emailEditingController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
-          title: Text("Forgot Password",
+          title: Text(LocaleKeys.forgetPassword.tr(),
               style: Theme.of(context).textTheme.subtitle1),
         ),
         body: BlocConsumer<AuthCubit, AuthStates>(
@@ -43,10 +45,10 @@ class ForgotPasswordView extends StatelessWidget {
                         height: height(25),
                       ),
                       CustomText(
-                        text: "Forgot Your Password?",
+                        text: LocaleKeys.forgetYourPassword.tr(),
                         fontsize: 18.sp,
                         textAlign: TextAlign.center,
-                        height: height(1.5),
+                        height: 1,
                         color: Colors.black,
                       ),
                       SizedBox(
@@ -54,10 +56,11 @@ class ForgotPasswordView extends StatelessWidget {
                       ),
                       CustomText(
                         text:
-                            "To recover your password, you need to enter your registered email address. we will send the \n recovery code to your email",
+                            "${LocaleKeys.forgetPasswrod1.tr()} ${LocaleKeys.forgetPassword2.tr()}",
                         fontsize: 13.sp,
                         textAlign: TextAlign.center,
-                        height: height(1.5),
+                        height: 1.5,
+                        maxLines: 3,
                         color: Color(0xFF707070),
                       ),
                       SizedBox(
@@ -66,17 +69,16 @@ class ForgotPasswordView extends StatelessWidget {
                       Form(
                         key: _formKey,
                         child: CustomFormField(
+                          context: context,
                           controller: _emailEditingController,
                           type: TextInputType.emailAddress,
                           validate: (value) {
                             if (value!.isEmpty) {
                               return "";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
-                          label: "Email Address",
-                          context: context,
+                          label: LocaleKeys.email.tr(),
                           hintText: "support.kw@gmail.com",
                         ),
                       ),
@@ -96,7 +98,7 @@ class ForgotPasswordView extends StatelessWidget {
                                     context: context);
                               }
                             },
-                            text: "Send Code"),
+                            text: LocaleKeys.sendCode.tr()),
                         fallback: (context) => Center(
                           child: CircularProgressIndicator.adaptive(),
                         ),

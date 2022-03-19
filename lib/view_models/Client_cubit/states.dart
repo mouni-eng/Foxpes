@@ -24,23 +24,19 @@ class GetUserMessagesDataSuccessState extends ClientStates {}
 
 class GetUserMessagesDataErrorState extends ClientStates {}
 
+class GetUserNotOpenedDataLoadingState extends ClientStates {}
+
+class GetUserNotOpenedDataSuccessState extends ClientStates {}
+
 class GetAllUserMessagesDataLoadingState extends ClientStates {}
 
 class GetAllUserMessagesDataSuccessState extends ClientStates {}
 
 class GetAllUserMessagesDataErrorState extends ClientStates {}
 
-class GetUserNotOpenedDataLoadingState extends ClientStates {}
-
-class GetUserNotOpenedDataSuccessState extends ClientStates {}
-
 class SendUserMessageSuccessState extends ClientStates {}
 
 class SendUserMessageErrorState extends ClientStates {}
-
-class CreateRoomSuccessState extends ClientStates {}
-
-class CreateRoomErrorState extends ClientStates {}
 
 class ChangeIndexState extends ClientStates {}
 

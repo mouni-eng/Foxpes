@@ -35,6 +35,7 @@ class ChatDetailsView extends StatelessWidget {
             resizeToAvoidBottomInset: true,
             appBar: AppBar(
               elevation: 4,
+              toolbarHeight: height(80),
               shadowColor: Colors.grey.withOpacity(0.3),
               title: Row(
                 children: [
@@ -55,6 +56,7 @@ class ChatDetailsView extends StatelessWidget {
                           text:
                               "${logInModel.firstName} ${logInModel.lastName}",
                           fontsize: 16.sp,
+                          maxLines: 1,
                           fontWeight: FontWeight.bold,
                           height: height(1.8),
                           color: kSecondaryColor),
@@ -63,22 +65,34 @@ class ChatDetailsView extends StatelessWidget {
                 ],
               ),
               centerTitle: false,
-              actions: [
-                IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      "assets/icons/call.svg",
-                      width: width(20),
-                      height: height(20),
-                    )),
-                IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      "assets/icons/video.svg",
-                      width: width(20),
-                      height: height(20),
-                    )),
-              ],
+              /*actions: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: width(10),
+                  ),
+                  child: IconButton(
+                      constraints: BoxConstraints(),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/icons/call.svg",
+                        width: width(20),
+                        height: height(20),
+                      )),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: width(10)),
+                  child: IconButton(
+                      constraints: BoxConstraints(),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/icons/video.svg",
+                        width: width(20),
+                        height: height(20),
+                      )),
+                ),
+              ],*/
             ),
             body: Stack(
               children: [
@@ -100,8 +114,7 @@ class ChatDetailsView extends StatelessWidget {
                                   itemCount: cubit.userMessages.length,
                                   itemBuilder: (context, index) {
                                     var message = cubit.userMessages[index];
-                                    if (cubit.logInModel!.uid ==
-                                        message.senderId)
+                                    if (uId == message.senderId)
                                       return MyMessage(
                                         message: message,
                                       );
@@ -144,6 +157,7 @@ class ChatDetailsView extends StatelessWidget {
                           if (_formKey.currentState!.validate()) {
                             cubit.sendUserMessage(
                                 receiverId: logInModel.uid!,
+                                token: logInModel.token!,
                                 dateTime: DateTime.now().toUtc().toString(),
                                 text: messageController.text);
                             FocusScope.of(context).unfocus();
@@ -172,7 +186,7 @@ class Message extends StatelessWidget {
     return Align(
       alignment: AlignmentDirectional.centerStart,
       child: Container(
-        width: width(261),
+        width: width(159),
         decoration: BoxDecoration(
           color: Color(0xFFF3F3F3),
           borderRadius: BorderRadiusDirectional.only(
@@ -199,13 +213,14 @@ class Message extends StatelessWidget {
               child: CustomText(
                   text: message.text,
                   fontsize: 14.sp,
-                  height: height(2),
+                  maxLines: 10,
+                  height: 2,
                   color: kSecondaryColor),
             ),
             CustomText(
                 text: clockString,
                 fontsize: 10.sp,
-                height: height(1.4),
+                height: 1,
                 textAlign: TextAlign.right,
                 color: kSecondaryColor),
           ],
@@ -255,13 +270,14 @@ class MyMessage extends StatelessWidget {
               child: CustomText(
                   text: message.text,
                   fontsize: 14.sp,
-                  height: height(2),
+                  maxLines: 10,
+                  height: 2,
                   color: Colors.white),
             ),
             CustomText(
                 text: clockString,
                 fontsize: 10.sp,
-                height: height(1.4),
+                height: 1,
                 textAlign: TextAlign.right,
                 color: Colors.white),
           ],

@@ -10,7 +10,6 @@ import 'package:movies_app/view_models/find_partner_cubit/cubit.dart';
 import 'package:movies_app/view_models/find_partner_cubit/states.dart';
 import 'package:movies_app/widgets/custom_button.dart';
 import 'package:movies_app/widgets/custom_text.dart';
-import 'package:movies_app/widgets/custom_toast.dart';
 
 class FiltringWidget extends StatelessWidget {
   final String title;
@@ -65,7 +64,11 @@ class FiltringWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(text: title, fontsize: 13.sp, color: kHintTextColor),
-            SvgPicture.asset("assets/icons/arrow_drop.svg"),
+            SvgPicture.asset(
+              "assets/icons/arrow_drop.svg",
+              width: width(9),
+              height: height(5),
+            ),
           ],
         ),
       ),
@@ -97,10 +100,15 @@ class FiltringListWidget extends StatelessWidget {
                   CustomText(
                       text: title, fontsize: 16.sp, color: kSecondaryColor),
                   InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: SvgPicture.asset("assets/icons/close.svg")),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: SvgPicture.asset(
+                      "assets/icons/close.svg",
+                      width: width(12),
+                      height: height(12),
+                    ),
+                  ),
                 ],
               ),
               Divider(

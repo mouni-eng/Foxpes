@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/size_config.dart';
-import 'package:movies_app/translate/locale_keys.g.dart';
+import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Auth_Cubit/cubit.dart';
 import 'package:movies_app/view_models/Auth_Cubit/states.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -58,8 +58,8 @@ class RegisterView extends StatelessWidget {
                                   }
                                   return null;
                                 },
-                                label: LocaleKeys.Name.tr(),
-                                hintText: "Mohamed"),
+                                label: LocaleKeys.name.tr(),
+                                hintText: LocaleKeys.mohamed.tr()),
                           ),
                           SizedBox(
                             width: width(9),
@@ -76,7 +76,7 @@ class RegisterView extends StatelessWidget {
                                 return null;
                               },
                               label: LocaleKeys.lastName.tr(),
-                              hintText: "Mounir",
+                              hintText: LocaleKeys.mounir.tr(),
                             ),
                           ),
                         ],
@@ -133,35 +133,35 @@ class RegisterView extends StatelessWidget {
                           dropItems: [
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Student",
+                                LocaleKeys.student.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Student",
                             ),
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Teacher",
+                                LocaleKeys.teacher.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Teacher",
                             ),
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Baby Sitter",
+                                LocaleKeys.babySitter.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Baby Sitter",
                             ),
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Driver",
+                                LocaleKeys.driver.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Driver",
                             ),
                           ],
                           label: LocaleKeys.registerAS.tr(),
-                          hint: "Choose Category",
+                          hint: LocaleKeys.choose_Category.tr(),
                           onChange: (String? value) {
                             cubit.chooseCategories(value!);
                           }),
@@ -179,21 +179,21 @@ class RegisterView extends StatelessWidget {
                           dropItems: [
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Male",
+                                LocaleKeys.male.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Male",
                             ),
                             DropdownMenuItem<String>(
                               child: Text(
-                                "Female",
+                                LocaleKeys.female.tr(),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               value: "Female",
                             ),
                           ],
-                          label: "Gender",
-                          hint: "Choose Gender",
+                          label: LocaleKeys.gender.tr(),
+                          hint: LocaleKeys.choose_gender.tr(),
                           onChange: (String? value) {
                             cubit.chooseGender(value!);
                           }),
@@ -245,7 +245,7 @@ class RegisterView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Already have an account?",
+                            LocaleKeys.alreadyHaveAccount.tr(),
                             style:
                                 Theme.of(context).textTheme.subtitle2!.copyWith(
                                       fontWeight: FontWeight.normal,
@@ -256,7 +256,7 @@ class RegisterView extends StatelessWidget {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                "Sign In",
+                                LocaleKeys.login.tr(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .subtitle2!

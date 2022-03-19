@@ -67,69 +67,85 @@ class PartnerCard extends StatelessWidget {
             SizedBox(
               width: width(16),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                    text: "${logInModel.firstName} ${logInModel.lastName}",
-                    fontsize: 14.sp,
-                    height: height(1.6),
-                    fontWeight: FontWeight.w500,
-                    color: kSecondaryColor),
-                if (logInModel.category == "Teacher")
-                  CustomText(
-                      text: logInModel.teachIn,
-                      fontsize: 14.sp,
-                      height: height(1.8),
-                      color: kHintTextColor),
-                if (logInModel.category == "Driver")
-                  CustomText(
-                      text: logInModel.careType,
-                      fontsize: 14.sp,
-                      height: height(1.8),
-                      color: kHintTextColor),
-                if (logInModel.category == "Baby Sitter")
-                  CustomText(
-                      text: logInModel.degree,
-                      fontsize: 14.sp,
-                      height: height(1.8),
-                      color: kHintTextColor),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/rating.svg",
-                      width: width(14),
-                      height: height(13),
-                    ),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: CustomText(
+                            text:
+                                "${logInModel.firstName} ${logInModel.lastName}",
+                            fontsize: 14.sp,
+                            height: 1.2,
+                            maxLines: 1,
+                            fontWeight: FontWeight.w500,
+                            color: kSecondaryColor),
+                      ),
+                      Flexible(
+                        child: CustomText(
+                          text:
+                              "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
+                          fontsize: 12.sp,
+                          color: kPrimaryColor,
+                          height: 1.2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height(5),
+                  ),
+                  if (logInModel.category == "Teacher")
                     CustomText(
-                        text:
-                            " ${FindPartnerCubit.get(context).allPartnersRating[index] ?? 0}",
-                        fontsize: 12.sp,
+                        text: logInModel.teachIn,
+                        fontsize: 14.sp,
+                        height: 1,
                         color: kHintTextColor),
-                    SizedBox(
-                      width: width(22),
-                    ),
-                    SvgPicture.asset(
-                      "assets/icons/location.svg",
-                      width: width(14),
-                      height: height(13),
-                    ),
+                  if (logInModel.category == "Driver")
                     CustomText(
-                        text: "  ${logInModel.country}",
-                        fontsize: 12.sp,
+                        text: logInModel.careType,
+                        fontsize: 14.sp,
+                        height: 1,
                         color: kHintTextColor),
-                  ],
-                )
-              ],
-            ),
-            Spacer(),
-            CustomText(
-              text:
-                  "KWD ${logInModel.price}/${logInModel.duration!.split(" ").last}",
-              fontsize: 12.sp,
-              color: kPrimaryColor,
-              fontWeight: FontWeight.bold,
+                  if (logInModel.category == "Baby Sitter")
+                    CustomText(
+                        text: logInModel.degree,
+                        fontsize: 14.sp,
+                        height: 1,
+                        color: kHintTextColor),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/rating.svg",
+                        width: width(14),
+                        height: height(13),
+                      ),
+                      CustomText(
+                          text:
+                              " ${FindPartnerCubit.get(context).allPartnersRating[index] ?? 0}",
+                          fontsize: 12.sp,
+                          color: kHintTextColor),
+                      SizedBox(
+                        width: width(22),
+                      ),
+                      SvgPicture.asset(
+                        "assets/icons/location.svg",
+                        width: width(14),
+                        height: height(13),
+                      ),
+                      CustomText(
+                          text: "  ${logInModel.country}",
+                          fontsize: 12.sp,
+                          color: kHintTextColor),
+                    ],
+                  )
+                ],
+              ),
             ),
           ]),
         ),

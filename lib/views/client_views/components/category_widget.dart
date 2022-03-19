@@ -21,13 +21,10 @@ class CategoryBox extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () {},
-            child: SvgPicture.asset(
-              categoryModel.image,
-              width: width(40),
-              height: height(40),
-            ),
+          SvgPicture.asset(
+            categoryModel.image,
+            width: width(40),
+            height: height(40),
           ),
           CustomText(
               text: categoryModel.title,

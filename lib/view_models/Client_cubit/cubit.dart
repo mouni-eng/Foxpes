@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:movies_app/constants.dart';
 import 'package:movies_app/main.dart';
 import 'package:movies_app/models/message_model.dart';
+import 'package:movies_app/models/notification_model.dart';
 import 'package:movies_app/models/user_model.dart';
 import 'package:movies_app/services/local/cache_helper.dart';
 import 'package:movies_app/size_config.dart';
@@ -33,6 +34,7 @@ class ClientCubit extends Cubit<ClientStates> {
   List<dynamic>? popularTeachersRating = [];
   List<LogInModel> chatsList = [];
   List<MessageModel> lastMessagesList = [];
+  List<NotificationMessage> notificationList = [];
   Map<String, int> notOpenedMessages = {};
   int carouselIndex = 0;
   bool notificationValue = true;
@@ -55,13 +57,16 @@ class ClientCubit extends Cubit<ClientStates> {
     });
   }
 
+  void addNotificationList(NotificationMessage message) {
+    notificationList.add(message);
+  }
+
   void getPopularTeacherData() {
     popularTeachersRating = [];
     emit(GetPopularTeacherDataLoadingState());
     _firestore
         .collection("user")
         .where("category", isEqualTo: "Teacher")
-        .limit(4)
         .get()
         .then((value) {
       value.docs.forEach((element) {
@@ -122,48 +127,6 @@ class ClientCubit extends Cubit<ClientStates> {
     ClientSettingsView(),
   ];
 
-  List<BottomNavigationBarItem> bottomNavBarList = [
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/home.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/home-2.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      label: "Home",
-    ),
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/sms.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/sms-2.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      label: "Messages",
-    ),
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/profile.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/profile-2.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      label: "Settings",
-    ),
-  ];
-
   int currentIndex = 0;
 
   void changeBottomNav(int index) {
@@ -216,47 +179,22 @@ class ClientCubit extends Cubit<ClientStates> {
     });
   }
 
-  /* void getUserChats() {
-    emit(GetUserChatsDataLoadingState());
-    _firestore
-        .collection('user')
-        .doc(uId)
-        .collection("chats")
-        .orderBy("dateTime", descending: false)
-        .snapshots()
-        .listen((event) {
-      if (event.docs.length == 0) {
-        emit(GetUserChatsDataSuccessState());
-      }
-      event.docs.forEach((element) {
-        notOpenedMessages = [];
-        lastMessagesList = [];
-        chatsList = [];
-        _firestore.collection("user").doc(element.id).get().then((value) {
-          chatsList!.add(LogInModel.fromJson(value.data()!));
-          emit(GetUserChatsDataSuccessState());
-        }).catchError((error) {
-          print(error.toString());
-          emit(GetUserChatsDataErrorState());
-        });
-      });
-    });
-  }*/
   void getUserChats() {
     emit(GetUserChatsDataLoadingState());
     _firestore
         .collection("user")
         .doc(uId)
         .collection("chats")
+        .where("isOpened", isEqualTo: false)
         .orderBy("dateTime")
-        .snapshots()
-        .listen((value) {
-      if (value.docs.length == 0) {
+        .get()
+        .then((event) {
+      chatsList = [];
+      lastMessagesList = [];
+      if (event.docs.length == 0) {
         emit(GetUserChatsDataSuccessState());
       } else {
-        value.docs.forEach((element) {
-          chatsList = [];
-          lastMessagesList = [];
+        event.docs.forEach((element) {
           _firestore.collection("user").doc(element.id).get().then((value) {
             chatsList.add(LogInModel.fromJson(value.data()!));
             lastMessagesList.add(MessageModel.fromJson(element.data()));
@@ -302,7 +240,7 @@ class ClientCubit extends Cubit<ClientStates> {
     emit(GetAllUserMessagesDataLoadingState());
     FirebaseFirestore.instance
         .collection('user')
-        .doc(logInModel!.uid)
+        .doc(uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -332,10 +270,11 @@ class ClientCubit extends Cubit<ClientStates> {
     required String receiverId,
     required String dateTime,
     required String text,
+    required String token,
   }) {
     MessageModel model = MessageModel(
       text: text,
-      senderId: logInModel!.uid,
+      senderId: uId,
       receiverId: receiverId,
       dateTime: dateTime,
       isOpened: false,
@@ -344,7 +283,7 @@ class ClientCubit extends Cubit<ClientStates> {
     // set my chats
     FirebaseFirestore.instance
         .collection('user')
-        .doc(logInModel!.uid)
+        .doc(uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -355,13 +294,23 @@ class ClientCubit extends Cubit<ClientStates> {
     }).catchError((error) {
       emit(SendUserMessageErrorState());
     }).then((value) {
+      MessageModel reciverModel = MessageModel(
+        text: text,
+        senderId: uId,
+        senderName: "${logInModel!.firstName} ${logInModel!.lastName}",
+        image: logInModel!.image,
+        token: token,
+        receiverId: receiverId,
+        dateTime: dateTime,
+        isOpened: false,
+      );
       FirebaseFirestore.instance
           .collection('user')
           .doc(receiverId)
           .collection('chats')
-          .doc(logInModel!.uid)
+          .doc(uId)
           .collection('messages')
-          .add(model.toMap())
+          .add(reciverModel.toMap())
           .then((value) {
         emit(SendUserMessageSuccessState());
       }).catchError((error) {
@@ -377,6 +326,37 @@ class ClientCubit extends Cubit<ClientStates> {
   void updateMessagesStatus({
     required String receiverId,
   }) {
+    MessageModel model = MessageModel(
+      text: userMessages.last.text,
+      senderId: uId,
+      receiverId: receiverId,
+      dateTime: userMessages.last.dateTime,
+      isOpened: false,
+    );
+    _firestore
+        .collection("user")
+        .doc(uId)
+        .collection("chats")
+        .doc(receiverId)
+        .set(model.toMap())
+        .then((value) {
+      MessageModel model = MessageModel(
+        text: userMessages.last.text,
+        senderId: uId,
+        receiverId: receiverId,
+        dateTime: userMessages.last.dateTime,
+        isOpened: false,
+      );
+      _firestore
+          .collection("user")
+          .doc(receiverId)
+          .collection("chats")
+          .doc(uId)
+          .set(model.toMap());
+    });
+  }
+
+  void updateIsOpenedStatus({required String receiverId}) {
     _firestore
         .collection("user")
         .doc(uId)
@@ -394,33 +374,7 @@ class ClientCubit extends Cubit<ClientStates> {
         });
       }
     }).then((value) {
-      MessageModel model = MessageModel(
-        text: userMessages.last.text,
-        senderId: uId,
-        receiverId: receiverId,
-        dateTime: userMessages.last.dateTime,
-        isOpened: false,
-      );
-      _firestore
-          .collection("user")
-          .doc(uId)
-          .collection("chats")
-          .doc(receiverId)
-          .set(model.toMap());
-    }).then((value) {
-      MessageModel model = MessageModel(
-        text: userMessages.last.text,
-        senderId: uId,
-        receiverId: receiverId,
-        dateTime: userMessages.last.dateTime,
-        isOpened: false,
-      );
-      _firestore
-          .collection("user")
-          .doc(receiverId)
-          .collection("chats")
-          .doc(uId)
-          .set(model.toMap());
+      getUserChats();
     });
   }
 

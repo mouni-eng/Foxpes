@@ -21,37 +21,38 @@ class CustomDropDownBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height(52),
-      child: DropdownButtonFormField<String>(
-        items: dropItems,
-        onChanged: onChange,
-        validator: validate,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: label,
-          hintText: hint,
-          floatingLabelStyle: Theme.of(context)
-              .textTheme
-              .subtitle2!
-              .copyWith(color: kPrimaryColor),
-          counterText: "",
-          errorStyle: TextStyle(
-            height: 0,
-          ),
-          contentPadding: EdgeInsets.only(
-            left: width(15),
-            right: width(13),
-          ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: kTextFieldColor,
-              ),
-              borderRadius: BorderRadius.circular(6)),
-          hintStyle: Theme.of(context).textTheme.bodyText2,
-          labelStyle: Theme.of(context).textTheme.subtitle2,
+    return DropdownButtonFormField<String>(
+      isExpanded: true,
+      items: dropItems,
+      iconSize: width(24),
+      onChanged: onChange,
+      validator: validate,
+      decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: label,
+        hintText: hint,
+        floatingLabelStyle: Theme.of(context)
+            .textTheme
+            .subtitle2!
+            .copyWith(color: kPrimaryColor),
+        counterText: "",
+        errorStyle: TextStyle(
+          height: 0,
         ),
+        contentPadding: EdgeInsets.only(
+          left: width(15),
+          top: height(15),
+          bottom: height(15),
+          right: width(13),
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: kTextFieldColor,
+            ),
+            borderRadius: BorderRadius.circular(6)),
+        hintStyle: Theme.of(context).textTheme.bodyText2,
+        labelStyle: Theme.of(context).textTheme.subtitle2,
       ),
     );
   }
