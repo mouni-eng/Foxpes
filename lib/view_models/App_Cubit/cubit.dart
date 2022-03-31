@@ -18,25 +18,29 @@ class AppCubit extends Cubit<AppStates> {
   bool? isBoarding;
 
   void getCacheData() {
-    isBoarding = CacheHelper.getData(key: "onBoarding");
-    myUid = CacheHelper.getData(key: "uId");
-    myCategorie = CacheHelper.getData(key: "categorie");
+    isBoarding = CacheHelper.getData(key: "onBoardings");
+    myUid = CacheHelper.getData(key: "uid");
+    myCategorie = CacheHelper.getData(key: "categories");
     uId = myUid;
     categorie = myCategorie;
     emit(AppInitialPageState());
   }
 
   Widget chooseInitialPage() {
-    if (isBoarding != null) {
-      if (uId == null || categorie == null) {
+    print(isBoarding.toString());
+    print(uId.toString());
+    print(categorie.toString());
+    if (isBoarding == true) {
+      if (uId == null && categorie == null) {
         return LoginView();
       } else if (categorie == "Student") {
         return ClientLayoutView();
       } else {
         return PartnerHomeView();
       }
-    } else
+    } else {
       return OnBoardingScreen();
+    }
   }
 
   void getToken() async {

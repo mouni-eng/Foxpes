@@ -11,7 +11,7 @@ class FindPartnerCubit extends Cubit<FindPartnerStates> {
 
   static FindPartnerCubit get(context) => BlocProvider.of(context);
 
-  // method for handling find teachers data
+  // method for handling find partners data
 
   List<LogInModel> allPartnersServices = [];
   List<dynamic> allPartnersRating = [];
@@ -27,6 +27,9 @@ class FindPartnerCubit extends Cubit<FindPartnerStates> {
         .where('category', isEqualTo: key)
         .get()
         .then((value) {
+      if (value.docs.length == 0) {
+        emit(GetAllPartnersSuccessState());
+      }
       value.docs.forEach((element) {
         element.reference.collection("rating").get().then((value) {
           int ratingSum = int.parse(value.docs.first["rating"]) +

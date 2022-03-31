@@ -77,18 +77,34 @@ class FindPartnerView extends StatelessWidget {
                     ),
                     ConditionalBuilder(
                       condition: state is! GetAllPartnersLoadingState,
-                      builder: (context) => ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => PartnerCard(
-                                logInModel: cubit.allPartnersServices[index],
-                                index: index,
-                              ),
-                          separatorBuilder: (context, index) => SizedBox(
-                                height: height(15),
-                              ),
-                          itemCount: cubit.allPartnersServices.length),
+                      builder: (context) => cubit.allPartnersServices.length !=
+                              0
+                          ? ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) => PartnerCard(
+                                    logInModel:
+                                        cubit.allPartnersServices[index],
+                                    index: index,
+                                  ),
+                              separatorBuilder: (context, index) => SizedBox(
+                                    height: height(15),
+                                  ),
+                              itemCount: cubit.allPartnersServices.length)
+                          : Column(
+                              children: [
+                                SizedBox(
+                                  height: height(45),
+                                ),
+                                Center(
+                                  child: CustomText(
+                                      text: "No current $category",
+                                      fontsize: 14.sp,
+                                      color: kHintTextColor),
+                                ),
+                              ],
+                            ),
                       fallback: (context) => Center(
                         child: CircularProgressIndicator.adaptive(),
                       ),

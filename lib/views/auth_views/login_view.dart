@@ -110,7 +110,7 @@ class LoginView extends StatelessWidget {
                             return null;
                           },
                           label: LocaleKeys.email.tr(),
-                          hintText: "support.kw@gmail.com",
+                          hintText: "support.kw@foxpes.com",
                         ),
                         SizedBox(
                           height: height(16),

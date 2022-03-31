@@ -40,8 +40,8 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(LocaleKeys.confirmCode.tr(), style: Theme.of(context).textTheme.headline1),
+        title: Text(LocaleKeys.confirmCode.tr(),
+            style: Theme.of(context).textTheme.headline1),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -107,6 +107,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                       setState(() {
                         pin = value;
                       });
+                      print(pin);
                     }),
                 SizedBox(
                   height: height(24),
@@ -120,7 +121,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                         FocusScope.of(context).unfocus();
                         await FirebaseAuth.instance
                             .signInWithCredential(PhoneAuthProvider.credential(
-                                verificationId: verificationCode!,
+                                verificationId: verificationCode ?? "",
                                 smsCode: pin!))
                             .then((value) async {
                           if (value.user != null) {
@@ -132,6 +133,7 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
                         });
                       } catch (e) {
                         FocusScope.of(context).unfocus();
+                        print(e.toString());
                         showToast(text: "Invalid otp", state: ToastState.ERROR);
                       }
                     },
@@ -178,6 +180,8 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
+              navigateTo(context,
+                  UploadProfilePictureView(logInModel: widget.logInModel));
               showToast(text: "Verified", state: ToastState.SUCCESS);
             }
           }).catchError((error) {
@@ -192,12 +196,14 @@ class _OtpVerficationViewState extends State<OtpVerficationView> {
             setState(() {
               verificationCode = verficationID;
             });
+            print(verificationCode);
           }
         },
         codeAutoRetrievalTimeout: (String verificationID) {
           if (this.mounted) {
             setState(() {
               verificationCode = verificationID;
+              print(verificationCode);
             });
           }
         },

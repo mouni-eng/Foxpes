@@ -144,11 +144,11 @@ class AuthCubit extends Cubit<AuthStates> {
             .doc(userModel!.uid)
             .update({"token": tokenMessages}).then((value) {
           CacheHelper.saveData(
-            key: 'uId',
+            key: 'uid',
             value: userModel!.uid,
           ).then((value) {
             CacheHelper.saveData(
-              key: 'categorie',
+              key: 'categories',
               value: userModel!.category,
             ).then((value) {
               initialHomeScreen(context: context, logInModel: userModel!);
@@ -222,11 +222,11 @@ class AuthCubit extends Cubit<AuthStates> {
           .collection("rating")
           .add({"rating": "0"}).then((value) {
         CacheHelper.saveData(
-          key: 'uId',
+          key: 'uid',
           value: logInModel.uid,
         ).then((value) {
           CacheHelper.saveData(
-            key: 'categorie',
+            key: 'categories',
             value: logInModel.category,
           ).then((value) {
             initialHomeScreen(context: context, logInModel: logInModel);

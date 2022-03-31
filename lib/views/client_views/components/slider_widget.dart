@@ -108,7 +108,6 @@ class SliderData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
-    print(locale);
     return Container(
       height: height(165),
       child: Stack(

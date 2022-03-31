@@ -20,6 +20,7 @@ import 'package:movies_app/view_models/Client_cubit/states.dart';
 import 'package:movies_app/views/client_views/client_home.dart';
 import 'package:movies_app/views/client_views/messages_view.dart';
 import 'package:movies_app/views/client_views/settings_view.dart';
+import 'package:movies_app/views/starting_views/onboarding_view.dart';
 import 'package:movies_app/widgets/custom_navigation.dart';
 import 'package:movies_app/widgets/custom_toast.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -48,10 +49,14 @@ class ClientCubit extends Cubit<ClientStates> {
       logInModel = LogInModel.fromJson(value.data()!);
       emit(GetUserDataSuccessState());
     }).catchError((error) {
+      print(error.toString());
+      Foxpes.navigatorKey.currentState!.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => OnBoardingScreen()),
+          (route) => false);
       emit(GetUserDataErrorState());
-      showToast(
+      /*showToast(
           text: "Something went wrong please try again later",
-          state: ToastState.ERROR);
+          state: ToastState.ERROR);*/
     }).then((value) {
       getPopularTeacherData();
     });
@@ -69,19 +74,23 @@ class ClientCubit extends Cubit<ClientStates> {
         .where("category", isEqualTo: "Teacher")
         .get()
         .then((value) {
-      value.docs.forEach((element) {
-        element.reference.collection("rating").get().then((value) {
-          int ratingSum = int.parse(value.docs.first["rating"]) +
-              int.parse(value.docs.last["rating"]);
-          print(ratingSum.toString());
-          double rating = value.docs.length == 1
-              ? ratingSum / 2
-              : ratingSum / value.docs.length;
-          popularTeachersRating!.add(rating.round());
-          popularTeachers!.add(LogInModel.fromJson(element.data()));
-          emit(GetPopularTeacherDataSuccessState());
+      if (value.docs.length == 0) {
+        emit(GetPopularTeacherDataSuccessState());
+      } else {
+        value.docs.forEach((element) {
+          element.reference.collection("rating").get().then((value) {
+            int ratingSum = int.parse(value.docs.first["rating"]) +
+                int.parse(value.docs.last["rating"]);
+            print(ratingSum.toString());
+            double rating = value.docs.length == 1
+                ? ratingSum / 2
+                : ratingSum / value.docs.length;
+            popularTeachersRating!.add(rating.round());
+            popularTeachers!.add(LogInModel.fromJson(element.data()));
+            emit(GetPopularTeacherDataSuccessState());
+          });
         });
-      });
+      }
     }).catchError((error) {
       emit(GetPopularTeacherDataErrorState());
       showToast(

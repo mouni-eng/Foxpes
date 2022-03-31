@@ -26,22 +26,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     List<OnBoardingModel> onBoardingList = [
-  OnBoardingModel(
-      title: LocaleKeys.discoverTeachers.tr(),
-      image: "assets/images/Mask Group 46.png",
-      subtitle:
-          LocaleKeys.youcanfindteachers.tr()),
-  OnBoardingModel(
-      title: LocaleKeys.findBabySitter.tr(),
-      image: "assets/images/Mask Group 43.png",
-      subtitle:
-          LocaleKeys.findthebestsitter.tr()),
-  OnBoardingModel(
-      title: LocaleKeys.dealWithDriver.tr(),
-      image: "assets/images/Mask Group 44.png",
-      subtitle:
-          LocaleKeys.discoverthebestdriver.tr()),
-];
+      OnBoardingModel(
+          title: LocaleKeys.discoverTeachers.tr(),
+          image: "assets/images/Mask Group 46.png",
+          subtitle: LocaleKeys.youcanfindteachers.tr()),
+      OnBoardingModel(
+          title: LocaleKeys.findBabySitter.tr(),
+          image: "assets/images/Mask Group 43.png",
+          subtitle: LocaleKeys.findthebestsitter.tr()),
+      OnBoardingModel(
+          title: LocaleKeys.dealWithDriver.tr(),
+          image: "assets/images/Mask Group 44.png",
+          subtitle: LocaleKeys.discoverthebestdriver.tr()),
+    ];
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -68,10 +65,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     child: TextButton(
                       onPressed: () {
                         showDialog(
-                                  barrierColor: Colors.black.withOpacity(0.8),
-                                  context: context,
-                                  builder: (context) => ChangeLanguageWidget());
-                        
+                            barrierColor: Colors.black.withOpacity(0.8),
+                            context: context,
+                            builder: (context) => ChangeLanguageWidget());
+
                         // TODO: change language
                       },
                       style: TextButton.styleFrom(
@@ -142,7 +139,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               CustomButton(
                 function: () {
                   CacheHelper.saveData(
-                    key: 'onBoarding',
+                    key: 'onBoardings',
                     value: true,
                   ).then((value) {
                     if (value) {
@@ -159,7 +156,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 children: [
                   TextButton(
                       onPressed: () {
-                        navigateToAndFinish(context, LoginView());
+                        CacheHelper.saveData(
+                          key: 'onBoardings',
+                          value: true,
+                        ).then((value) {
+                          if (value) {
+                            navigateToAndFinish(context, LoginView());
+                          }
+                        });
                       },
                       child: Text(
                         LocaleKeys.sKIP.tr(),
@@ -175,7 +179,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     function: () {
                       if (isLast) {
                         CacheHelper.saveData(
-                          key: 'onBoarding',
+                          key: 'onBoardings',
                           value: true,
                         ).then((value) {
                           if (value) {

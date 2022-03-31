@@ -6,51 +6,52 @@ import 'package:movies_app/size_config.dart';
 import 'package:movies_app/translations/locale_keys.g.dart';
 import 'package:movies_app/view_models/Client_cubit/cubit.dart';
 import 'package:movies_app/view_models/Client_cubit/states.dart';
+
 class ClientLayoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-      List<BottomNavigationBarItem> bottomNavBarList = [
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/home.svg",
-        width: width(20.1),
-        height: height(20.1),
+    List<BottomNavigationBarItem> bottomNavBarList = [
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          "assets/icons/home.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/home-2.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        label: LocaleKeys.home.tr(),
       ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/home-2.svg",
-        width: width(20.1),
-        height: height(20.1),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          "assets/icons/sms.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/sms-2.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        label: LocaleKeys.messages.tr(),
       ),
-      label: LocaleKeys.home.tr(),
-    ),
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/sms.svg",
-        width: width(20.1),
-        height: height(20.1),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          "assets/icons/profile.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        activeIcon: SvgPicture.asset(
+          "assets/icons/profile-2.svg",
+          width: width(20.1),
+          height: height(20.1),
+        ),
+        label: LocaleKeys.settings.tr(),
       ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/sms-2.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      label: LocaleKeys.messages.tr(),
-    ),
-    BottomNavigationBarItem(
-      icon: SvgPicture.asset(
-        "assets/icons/profile.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      activeIcon: SvgPicture.asset(
-        "assets/icons/profile-2.svg",
-        width: width(20.1),
-        height: height(20.1),
-      ),
-      label: LocaleKeys.settings.tr(),
-    ),
-  ];
+    ];
     return BlocConsumer<ClientCubit, ClientStates>(
       listener: (context, state) {},
       builder: (context, state) {

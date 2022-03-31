@@ -46,9 +46,9 @@ class LogOutWidget extends StatelessWidget {
                         onTap: () async {
                           await FirebaseAuth.instance.signOut();
                           CacheHelper.removeData(
-                            key: 'uId',
+                            key: 'uid',
                           ).then((value) {
-                            CacheHelper.removeData(key: 'categorie')
+                            CacheHelper.removeData(key: 'categories')
                                 .then((value) {
                               if (value) {
                                 Navigator.pushAndRemoveUntil(

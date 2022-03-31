@@ -22,10 +22,14 @@ class ClientHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<CategoryModel> categoryListTr = [
-      CategoryModel(title: LocaleKeys.teacher.tr(), image: "assets/images/teacher-cat.svg"),
-      CategoryModel(title: LocaleKeys.driver.tr(), image: "assets/images/driver-cat.svg"),
       CategoryModel(
-      title: LocaleKeys.babySitter.tr(), image: "assets/images/baby-sitter-cat.svg"),
+          title: LocaleKeys.teacher.tr(),
+          image: "assets/images/teacher-cat.svg"),
+      CategoryModel(
+          title: LocaleKeys.driver.tr(), image: "assets/images/driver-cat.svg"),
+      CategoryModel(
+          title: LocaleKeys.babySitter.tr(),
+          image: "assets/images/baby-sitter-cat.svg"),
     ];
     return BlocConsumer<ClientCubit, ClientStates>(
       listener: (context, state) {},
@@ -96,12 +100,17 @@ class ClientHomeView extends StatelessWidget {
                             ),
                           ),
                         SizedBox(
-                              height: height(20.5),
-                              width: width(20.5),
-                              child: SvgPicture.asset(
-                                "assets/icons/notification.svg",
-                              ),
+                          height: height(20.5),
+                          width: width(20.5),
+                          child: GestureDetector(
+                            onTap: () {
+                              cubit.changeBottomNav(1);
+                            },
+                            child: SvgPicture.asset(
+                              "assets/icons/notification.svg",
                             ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -175,18 +184,36 @@ class ClientHomeView extends StatelessWidget {
                 ),
                 ConditionalBuilder(
                   condition: state is! GetPopularTeacherDataLoadingState,
-                  builder: (context) => ListView.separated(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => PopularTeachersCard(
-                            logInModel: cubit.popularTeachers![index],
-                            index: index,
-                          ),
-                      separatorBuilder: (context, index) => SizedBox(
-                            height: height(15),
-                          ),
-                      itemCount: cubit.popularTeachers!.length),
+                  builder: (context) => cubit.popularTeachers!.length != 0
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: width(2)),
+                                child: PopularTeachersCard(
+                                  logInModel: cubit.popularTeachers![index],
+                                  index: index,
+                                ),
+                              ),
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: height(15),
+                              ),
+                          itemCount: cubit.popularTeachers!.length)
+                      : Column(
+                          children: [
+                            SizedBox(
+                              height: height(45),
+                            ),
+                            Center(
+                              child: CustomText(
+                                  text: "No current Teachers",
+                                  fontsize: 14.sp,
+                                  color: kHintTextColor),
+                            ),
+                          ],
+                        ),
                   fallback: (context) => Center(
                     child: CircularProgressIndicator.adaptive(),
                   ),
